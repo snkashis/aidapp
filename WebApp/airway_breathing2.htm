@@ -1,0 +1,133 @@
+<html>
+
+<head>
+        <meta name="apple-mobile-web-app-capable"
+      content="yes" />
+    <meta name="viewport"
+    content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<title>
+Airway and Breathing 2</title>
+
+
+    <script>
+ $(document).ready(function(){
+
+$('#keypad').hide();
+var key_digit;
+$('.tel_button').click(function() {
+	key_digit = ($(this).html());
+	//alert(digit);
+	$('#lcd').html($('#lcd').html()+key_digit);
+}
+);
+
+$('#clear_button').click(function() {
+	$('#lcd').html("");
+	
+})
+
+$('#send_button').click(function() {
+	var is999 = $('#lcd').html();
+	if (is999 == '999') {
+	//alert('calling');
+	$('#tel_CheckBox').attr('checked', 'checked');
+	$('#keypad').fadeOut('slow');
+	$('#next_Button').attr('href', 'cpr1.htm');
+	$('#next_Button').fadeTo('slow', 1)
+	}
+	
+	
+})
+
+
+
+//trying to remove the ability to click checkboxs
+$(':checkbox').bind('click', function() {
+    this.blur();
+  event.preventDefault();
+    });
+
+
+var TimerRunning = false;
+
+function Start10Sec_Timer()
+  {
+	
+	TimerRunning = true;
+	//setTimeout(alert('TIMER'), 1000);
+    
+    setTimeout(function() {
+	$('#check10_CheckBox').attr('checked', 'checked');
+	$('#keypad').fadeIn('slow');       
+	       }, 10000);
+    
+ //Pop up telephone
+
+  }
+
+
+var get_all = setInterval(function() {
+    $.getJSON('get_all_states.php', function(data) {
+    if (data.tilt == '1') {
+    
+	var isChecked = $('#chin_CheckBox:checked').val();
+	//alert(isChecked);
+	if (isChecked == undefined)
+	{
+	    	    $('#chin_CheckBox').attr('checked', 'checked');
+	}
+	else {
+		
+		if (TimerRunning == false) {
+		Start10Sec_Timer();
+		}
+		
+		
+	}
+	
+	
+    }
+    
+    //if tilt == 0 while timerrunning  is true, block out div as failed?
+	})
+}, 1000);
+
+
+ 
+});
+</script>
+
+
+</head>
+
+<body>
+<p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
+<br/>
+VIDEO ANIMATION GOES HERE
+<br/>
+<form>
+<input type="checkbox" value="tilt" id="chin_CheckBox">Lift Chin<br/>
+<input type="checkbox" value="check10" id="check10_CheckBox">Check for Breathing (10 sec)<br/>
+
+<input type="checkbox" value="tel" id="tel_CheckBox">Call 999/112
+
+</form>
+
+<br/>
+<div id="keypad">
+<p id="lcd" style="width:300px;height:100px;font-size:15px;border:2px solid black;"></p>
+	</br>
+<a id="send_button" class="button" style="width:75px;" >SEND</a>
+<a id="clear_button" class="button" style="width:75px;">CLR</a>
+<p class="tel_button" >9</p>	
+</div>
+
+<br/>
+<br/>
+<a href="airway_breathing1.htm" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Next ></a>
+
+</body>
+</html>

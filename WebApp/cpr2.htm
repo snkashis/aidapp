@@ -1,0 +1,106 @@
+<html>
+
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<title>CPR 2</title>
+
+
+<script>
+ $(document).ready(function(){
+
+
+
+//trying to remove the ability to click checkboxs
+$(':checkbox').bind('click', function() {
+    this.blur();
+  event.preventDefault();
+    });
+
+var compression_Count = 0;
+var last_Comp_Value = '0';
+
+var get_all = setInterval(function() {
+    $.getJSON('get_all_states.php', function(data) {
+    
+    var Comp_Check = $('#compressions_CheckBox:checked').val();
+    var Chin_Check = $('#chin_CheckBox:checked').val();
+    var Nose_Check = $('#nose_CheckBox:checked').val();
+    var Breath_Check = $('#breaths_CheckBox:checked').val();
+    
+    
+    if (compression_Count >= 30) {
+    $('#compressions_CheckBox').attr('checked', 'checked');    
+    }
+    else {
+    if (data.force1 != last_Comp_Value) {
+    compression_Count++;
+    $('#count_area').text(compression_Count);
+    //alert(compression_Count);
+    last_Comp_Value = str(data.force1);
+    }
+    }
+    
+    
+    /*
+	//alert(Chin_is_Checked);
+	 if (Chin_Check == 'on' && Comp_Check == undefined)
+	{
+	    	    $('#compressions_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	}
+        
+    
+    
+    
+    if (data.tilt == '1') {
+    
+	if (Chin_Check == undefined) {
+	    	    $('#chin_CheckBox').attr('checked', 'checked');
+	}
+    }
+
+    if (data.force2 == '1') {
+        
+        if (Nose_Check == undefined) {
+            $('#nose_CheckBox').attr('checked', 'checked');
+        }
+    }
+    */
+    
+	})
+}, 1250);
+
+
+ 
+});
+</script>
+
+
+</head>
+
+<body>
+<p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
+<br/>
+VIDEO ANIMATION GOES HERE
+<br/>
+<form>
+<input type="checkbox" id="compressions_CheckBox">Compressions (30X)<br/>
+<input type="checkbox" id="chin_CheckBox">Lift Chin<br/>
+<input type="checkbox" id="nose_CheckBox">Pinch Nose<br/>
+<input type="checkbox" id="breaths_CheckBox">Rescue Breaths (2X)
+
+</form>
+
+COUNT:<br/>
+<p id="count_area"></p>
+<br/>
+
+<br/>
+<br/>
+<a href="cpr1.htm" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Done</a>
+
+</body>
+</html>

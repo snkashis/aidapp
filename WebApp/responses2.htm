@@ -1,0 +1,102 @@
+<html>
+
+<head>
+        <meta name="apple-mobile-web-app-capable"
+      content="yes" />
+    <meta name="viewport"
+    content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<title>
+Responses 2</title>
+
+
+    <script>
+ $(document).ready(function(){
+var ShakeDone = false;
+var ShoutDone = false;
+
+//trying to remove the ability to click checkboxs
+/*$(':checkbox').bind('click', function() {
+    this.blur();
+  event.preventDefault();
+    });
+*/
+
+
+var get_all = setInterval(function() {
+    $.getJSON('get_all_states.php', function(data) {
+	
+    if (ShakeDone == false) {	
+    if (data.shake == '1') {
+	$('#ShakeCheckBox').attr('checked', 'checked');
+	
+	ShakeDone = true;
+    }
+    
+    
+    }
+    if (ShoutDone == false)
+    if (data.audio == '1') {
+	$('#ShoutCheckBox').attr('checked', 'checked');
+	$('#next_Button').fadeTo('slow', 1);
+	$('#next_Button').attr('href', 'airway_breathing1.htm');
+	ShoutDone = true;
+	
+	var isChecked = $('#ShakeCheckBox:checked').val();
+	//alert(isChecked);
+	if (isChecked == undefined)
+	{
+	    	    $('#ShakeCheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+
+	}
+	
+    }
+    
+	})
+}, 1000);
+
+/*
+var force1timer = setInterval(function() {
+if ($('#Force1CheckBox').attr('checked')){
+    return false
+    }
+    else{
+    	
+    	$.get("checkForce1.php", function(data) {
+				if (data == '1') {
+   			$('#Force1CheckBox').attr('checked', 'checked');
+   				}
+   		})
+	}
+    	
+    
+  
+    }, 2000);
+*/
+ 
+});
+</script>
+
+
+</head>
+
+<body>
+<h1>Check for Responses 2</h1>
+
+VIDEO ANIMATION GOES HERE
+
+<form>
+<input type="checkbox" value="shake" id="ShakeCheckBox">Shake Shoulders<br/>
+<input type="checkbox" value="shout" id="ShoutCheckBox">Shout in both Ears<br/>
+
+</form>
+
+<br/>
+<br/>
+<br/>
+<a href="" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Next ></a>
+
+</body>
+</html>
