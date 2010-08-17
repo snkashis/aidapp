@@ -14,24 +14,44 @@ Tutorial Menu
 
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 
+<script>
+$(document).ready(function(){
+function BlockMove(event) {
+  event.preventDefault();
+ }
+ }
+</script>
 <style>
 li {
-padding:5px;
+padding:20px;
+font-size:40px;
 }
+
+#menu {
+    position:relative;
+    left:175px;
+}
+
+#menu a{
+    font-size:40px;
+    padding:10px;
+}
+
+
 </style>
 
 </head>
 
-<body>
-<h1>Tutorial Menu</h1>
+<body ontouchmove="BlockMove(event);">
 Please choose a tutorial below.
+<div id="menu">
 <ol>
 <li><a href="danger.htm" class="button">Check for danger</a></li>
 <li><a href="responses1.htm" class="button">Check for response</a></li>
 <li><a href="airway_breathing.htm" class="button">Check Airway & Breathing</a></li>
 <li><a href="compressions.htm" class="button">Begin Compressions</a></li>
 </ol>
-
-<a href="main_menu.htm" class="button">Main</a>
+</div>
+<a href="main_menu.htm" class="button" style="font-size:30px;">Main</a>
 </body>
 </html>

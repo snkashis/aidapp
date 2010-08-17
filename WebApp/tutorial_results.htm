@@ -1,0 +1,249 @@
+<html>
+
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+    <script>
+ $(document).ready(function(){
+    
+$.getJSON('get_all_results.php', function(data) {
+
+if(data.resp_shake=='1'){
+    $('#resp_shake_Checkbox').attr('checked', 'checked');
+}
+if(data.resp_shout=='1'){
+    $('#resp_shout_Checkbox').attr('checked', 'checked');
+}
+
+if(data.resp_shake=='1' && data.resp_shout=='1') {
+    $('#response_heading').removeClass();
+    $('#response_heading').addClass('succeed')
+}
+
+
+if(data.ab_chin=='1'){
+    $('#ab_chin_Checkbox').attr('checked', 'checked');
+}
+if(data.ab_breathing=='1'){
+    $('#ab_breathing_Checkbox').attr('checked', 'checked');
+}
+
+if(data.ab_telephone=='1'){
+    $('#ab_telephone_Checkbox').attr('checked', 'checked');
+}
+
+if(data.ab_chin=='1' && data.ab_breathing=='1' && data.ab_telephone=='1') {
+    $('#ab_heading').removeClass();
+    $('#ab_heading').addClass('succeed')
+    
+}
+
+if(data.cpr_compressions=='1'){
+    $('#cpr_compressions_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_chin=='1'){
+    $('#cpr_chin_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_nose=='1'){
+    $('#cpr_nose_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_breaths=='1'){
+    $('#cpr_breaths_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_compressions=='1' && data.cpr_chin=='1' && data.cpr_nose=='1' && data.cpr_breaths=='1') {
+    $('#cpr_heading').removeClass();
+    $('#cpr_heading').addClass('succeed')
+    
+}
+
+
+
+
+});
+ 
+var danger_expanded = 0;
+var response_expanded = 0;
+var ab_expanded = 0;
+var cpr_expanded = 0;
+    
+
+$('.results').hide();
+
+/*$('#danger_heading').click(function() {
+    $('#danger_results').toggle('slow');
+    if (danger_expanded==0) {
+    $('#danger_arrow').attr('src', 'images/arrow2.png');
+    
+    danger_expanded = 1;
+    }
+    else {
+     $('#danger_arrow').attr('src', 'images/arrow1.png');
+     
+     danger_expanded=0;
+    }
+*/
+
+
+   
+
+
+$('#response_heading').click(function() {
+    $('#response_results').toggle('slow');
+    if (response_expanded==0) {
+    $('#response_arrow').attr('src', 'images/arrow2.png');
+    
+    response_expanded = 1;
+    }
+    else {
+     $('#response_arrow').attr('src', 'images/arrow1.png');
+     
+     response_expanded=0;
+    }
+ });
+
+$('#ab_heading').click(function() {
+    $('#ab_results').toggle('slow');
+ });
+
+$('#cpr_heading').click(function() {
+    $('#cpr_results').toggle('slow');
+ });
+
+function BlockMove(event) {
+  event.preventDefault();
+ }
+    
+
+
+ });
+
+    </script>
+
+<style>
+
+li {
+    width:400px;
+    padding-left:2px;
+    padding-top:10px;
+    padding-bottom:10px;
+    -webkit-border-radius:2px;
+	-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
+    list-style:none;
+    font-size:18px;
+    margin-left:auto;
+    margin-right:auto;
+    
+}
+.succeed {
+    
+background:-webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.13, rgb(97,230,101)),
+    color-stop(0.31, rgb(97,230,102)),
+    color-stop(0.99, rgb(255,255,255))
+);
+}
+
+.failure {
+    
+    background:-webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.13, rgb(255,0,0)),
+    color-stop(0.31, rgb(255,0,0)),
+    color-stop(0.99, rgb(255,255,255))
+)
+
+}
+
+.arrows {
+    display:inline;
+    padding-left:150px;
+    position:absolute;
+    left:300px;
+    
+}
+
+.results {
+    position:relative;
+    left:250px;
+}
+
+
+</style>
+    
+    
+    
+<title>
+Tutorial Results</title>
+
+</head>
+
+<body ontouchmove="BlockMove(event);">
+<p> Here are the results from your tutorials. After reviewing, you may begin your practice.</p>
+<ul>
+    <li id="danger_heading" class="succeed">Check for Danger <img class="arrows" id="danger_arrow" src="images/arrow1.png" width=20></li>
+    <div id="danger_results" class="results">Danger RESULTS</div>
+    
+    <li id ="response_heading" class="failure" >Check for Response <img class="arrows" id="response_arrow" src="images/arrow1.png" width=20></li>
+    <div id="response_results" class="results">
+        
+        <table>
+            <tr>
+            <td style="width:150px;">Shake shoulders</td><td width="100"><input type=checkbox id="resp_shake_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Shout in both ears</td><td width="100"><input type=checkbox id="resp_shout_Checkbox"></td>
+        </table>  
+    </div>
+    
+    <li id="ab_heading" class="failure">Airway & Breathing <img class="arrows" id="a_b_arrow" src="images/arrow1.png" width=20></li>
+    <div id="ab_results" class="results">
+    <table width=300>
+    <tr>
+            <td style="width:150px;">Lift Chin</td><td width="100"><input type=checkbox id="ab_chin_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Check for Breathing</td><td width="100"><input type=checkbox id="ab_breathing_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Call 999/112</td><td width="100"><input type=checkbox id="ab_telephone"></td>
+            </tr>    
+    </table>
+    </div>
+    
+    <li id ="cpr_heading" class="failure">Learn CPR <img class="arrows" id="cpr_arrow" src="images/arrow1.png" width=20></li>
+    <div id="cpr_results" class="results">
+    <table width=300>
+            <tr>
+            <td style="width:150px;">Compressions(30x)</td><td width="100"><input type=checkbox id="cpr_compressions_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Lift Chin</td><td width="100"><input type=checkbox id="cpr_chin_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Pinch Nose</td><td width="100"><input type=checkbox id="cpr_nose_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Rescue Breaths (2x)</td><td width="100"><input type=checkbox id="cpr_breaths_Checkbox"></td>
+            </tr>
+        </table>      
+    
+    </div>
+    
+</ul>
+<div id="button_bar" style="position:absolute;bottom:10px;">
+<a href="main_menu.htm" class="button" style="font-size:35px;">Main</a> <a href="practice1.htm" class="button" style="font-size:35px;margin-left:490px;">Take Quiz</a>
+</div>
+</body>
+</html>

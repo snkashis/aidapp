@@ -11,17 +11,38 @@ Main Menu
 
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 
+
+<script>
+$(document).ready(function(){
+function BlockMove(event) {
+  
+  event.preventDefault();
+ }
+}
+</script>
+
 </head>
 
-<body>
+<body ontouchmove="BlockMove(event);">
 <center>
-<h1>Main Menu</h1>
 <h3>Choose an option to get started.</h3>
-<a href="full_demo_video.htm" class="button">Watch Video Overview</a>
-<br/><br/><br/><br/>
-<a href="tutorial_menu.htm" class="button" >Choose a Tutorial</a>
-<br/><br/><br/><br/>
-Take a practice quiz
+<table>
+   <tr> 
+<td><img src="images/watch_overview.png" style="padding-right:25px;"></td><td><a href="full_demo_video.htm" class="button" style="width:400px;font-size:45px;">Watch Video Overview</a></td>
+   </tr>
+   <tr><td><br/></td>
+   </tr>
+   <tr><td><br/></td>
+   </tr>
+   <tr>
+<td><img src="images/choose_tutorial.png" style="padding-right:25px;"></td><td><a href="tutorial_menu.htm" class="button" style="width:400px;font-size:45px;" >Choose a Tutorial</a></td>
+   </tr>
+   <table>
 
+
+<div id="button_bar" style="position:absolute;right:50px;bottom:100px;">
+<span style="padding-right:15px;">Take a practice quiz</span>
+<p id="blue_arrow">></p>
+</div>
 </body>
 </html>

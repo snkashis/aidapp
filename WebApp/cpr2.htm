@@ -20,6 +20,16 @@ $(':checkbox').bind('click', function() {
   event.preventDefault();
     });
 
+function BlockMove(event) {
+  // Tell Safari not to move the window.
+  event.preventDefault() ;
+ }
+
+
+
+document.getElementById('vid_cpr').load();
+document.getElementById('vid_cpr').play();
+
 var compression_Count = 0;
 var last_Comp_Value = '0';
 
@@ -81,10 +91,16 @@ var get_all = setInterval(function() {
 
 </head>
 
-<body>
-<p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
+<body ontouchmove="BlockMove(event);">
+    <div id="main">
+        <p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
+        <div id="left">
+<video class="videocss" src="videos/cpr2.mp4" loop width=496 height=368 id="vid_cpr">
+        </div>
+    <div id="right" style="position:absolute;right:75px;top:50px;">
+
 <br/>
-VIDEO ANIMATION GOES HERE
+
 <br/>
 <form>
 <input type="checkbox" id="compressions_CheckBox">Compressions (30X)<br/>
@@ -98,9 +114,10 @@ COUNT:<br/>
 <p id="count_area"></p>
 <br/>
 
-<br/>
-<br/>
+    </div>
+    <div id="button_bar" style="position:absolute;bottom:50px;">
 <a href="cpr1.htm" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Done</a>
-
+    </div>
+    </div>
 </body>
 </html>

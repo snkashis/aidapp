@@ -1,10 +1,8 @@
 <html>
 
 <head>
-    <meta name="apple-mobile-web-app-capable"
-      content="yes" />
-    <meta name="viewport"
-    content="user-scalable=no, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
 
 <title>
 Introduction
@@ -15,25 +13,44 @@ Introduction
 
 <script>
 $(document).ready(function(){
-	$('#BeginButton').click(function(){        
-		$.get("clear.php");
-		window.location = 'main_menu.htm';
+        
+        $('#BeginButton').click(function(){
+                            
+                //$.get("clear.php");
+		setTimeout(function(){
+                    
+                    window.location = 'main_menu.htm';
+                }, 4000);
+                
 	})
-                });
+        
+        
+            document.getElementById('vid_intro').load();
+            document.getElementById('vid_intro').play();
+           
+            
+function BlockMove(event) {
+event.preventDefault();
+ }    
+});
+        
+        
 </script>
 
 
 
 </head>
 
-<body>
+<body ontouchmove="BlockMove(event);">
 <center>
-<h1>First Aid Experience</h1>
+
 
 <br/>
 
+<video src="videos/meet_andy.mov" id="vid_intro" loop autobuffer preload width=400 height=300></video>
+
 <br/>
-<input name="submit" value="Begin" id="BeginButton" class="button" type="submit">
+<input name="submit" value="Begin" id="BeginButton" class="button" type="submit" style="width:700px;font-size:25px;position:absolute;bottom:20px;">
 </center>
 
 </body>

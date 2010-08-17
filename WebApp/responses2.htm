@@ -16,6 +16,9 @@ Responses 2</title>
  $(document).ready(function(){
 var ShakeDone = false;
 var ShoutDone = false;
+var shake=0;
+var shout=0;
+
 
 //trying to remove the ability to click checkboxs
 /*$(':checkbox').bind('click', function() {
@@ -24,22 +27,23 @@ var ShoutDone = false;
     });
 */
 
-
 var get_all = setInterval(function() {
     $.getJSON('get_all_states.php', function(data) {
 	
     if (ShakeDone == false) {	
     if (data.shake == '1') {
 	$('#ShakeCheckBox').attr('checked', 'checked');
+	shake=1;
 	
 	ShakeDone = true;
     }
     
     
     }
-    if (ShoutDone == false)
+    if (ShoutDone == false) {
     if (data.audio == '1') {
 	$('#ShoutCheckBox').attr('checked', 'checked');
+	shout=1;
 	$('#next_Button').fadeTo('slow', 1);
 	$('#next_Button').attr('href', 'airway_breathing1.htm');
 	ShoutDone = true;
@@ -52,29 +56,26 @@ var get_all = setInterval(function() {
 
 	}
 	
+	//set "Results" 
+	$.ajax({
+			url: "set_responses.php",
+			data: "shake="+ shake_val + "&shout="+ shout_val,
+			success: function(data){
+                        //alert(data);
+                        //Maybe gray out box and change the area to a "success" message
+			}
+                });
+	
+    }
+	
+	
+	
+	
     }
     
 	})
 }, 1000);
 
-/*
-var force1timer = setInterval(function() {
-if ($('#Force1CheckBox').attr('checked')){
-    return false
-    }
-    else{
-    	
-    	$.get("checkForce1.php", function(data) {
-				if (data == '1') {
-   			$('#Force1CheckBox').attr('checked', 'checked');
-   				}
-   		})
-	}
-    	
-    
-  
-    }, 2000);
-*/
  
 });
 </script>
@@ -96,7 +97,7 @@ VIDEO ANIMATION GOES HERE
 <br/>
 <br/>
 <br/>
-<a href="" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Next ></a>
+<a href="responses1.htm" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Next ></a>
 
 </body>
 </html>

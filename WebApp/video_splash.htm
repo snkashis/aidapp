@@ -1,0 +1,71 @@
+
+<html>
+<head>
+    <meta name="apple-mobile-web-app-capable"
+      content="yes" />
+    <meta name="viewport"
+    content="user-scalable=no, width=device-width" />
+    <title>Video</title>
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+    
+<script>
+$(document).ready(function(){
+        
+        $('#BeginButton').click(function(){
+            
+		document.getElementById('vid_intro').currentTime = 2.50;
+                
+                //$.get("clear.php");
+		setTimeout(function(){
+                    
+                    window.location = 'intro.htm';
+                }, 4000);
+                
+	})
+        
+        
+            document.getElementById('vid_intro').load();
+            document.getElementById('vid_intro').play();
+        
+        
+        
+        var t = setInterval(function(){
+        var time = document.getElementById('vid_intro').currentTime;   
+        
+        
+        if (time>=1.75 && time<=2.25) {
+            var starttime = document.getElementById('vid_intro').startTime;
+            document.getElementById('vid_intro').currentTime = 0;
+            document.getElementById('vid_intro').play();
+        }
+                    
+            
+            
+        },250);
+
+        
+        
+});
+        
+        
+</script>
+
+
+
+</head>
+
+<body>
+<center>
+
+
+<br/>
+
+<video src="videos/intro.mp4" id="vid_intro" loop autobuffer preload width=640 height=480></video>
+
+
+<br/>
+<input name="submit" value="Begin" id="BeginButton" class="button" type="submit" style="width:700px;font-size:25px;">
+</center>
+
+</body>
+</html>
