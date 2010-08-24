@@ -10,48 +10,27 @@ Introduction
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
+
+
+</script>
 
 <script>
 $(document).ready(function(){
-        
-        $('#BeginButton').click(function(){
-                            
-                //$.get("clear.php");
-		setTimeout(function(){
-                    
-                    window.location = 'main_menu.htm';
-                }, 4000);
-                
-	})
-        
-        
-            document.getElementById('vid_intro').load();
-            document.getElementById('vid_intro').play();
-           
-            
-function BlockMove(event) {
-event.preventDefault();
- }    
+document.getElementById('vid_intro').load();
+document.getElementById('vid_intro').play();
 });
-        
-        
 </script>
-
-
-
 </head>
 
-<body ontouchmove="BlockMove(event);">
+<body>
+
 <center>
+<video src="videos/meet_andy.mov" id="vid_intro"  autobuffer preload width=600 height=450></video>
 
 
-<br/>
-
-<video src="videos/meet_andy.mov" id="vid_intro" loop autobuffer preload width=400 height=300></video>
-
-<br/>
-<input name="submit" value="Begin" id="BeginButton" class="button" type="submit" style="width:700px;font-size:25px;position:absolute;bottom:20px;">
 </center>
-
+</div>
 </body>
 </html>

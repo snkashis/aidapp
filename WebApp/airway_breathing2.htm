@@ -1,10 +1,8 @@
 <html>
 
 <head>
-        <meta name="apple-mobile-web-app-capable"
-      content="yes" />
-    <meta name="viewport"
-    content="user-scalable=no, width=device-width" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
     <link rel="stylesheet" type="text/css" href="style.css">
 
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
@@ -14,6 +12,16 @@ Airway and Breathing 2</title>
 
     <script>
  $(document).ready(function(){
+var TiltDone = false;
+var CheckDone = false;
+var CallDone = false;
+var tilt = 0;
+var check = 0;
+var call = 0;
+	
+	
+	document.getElementById('vid_a_b').load();
+            document.getElementById('vid_a_b').play();
 
 $('#keypad').hide();
 var key_digit;
@@ -33,10 +41,12 @@ $('#send_button').click(function() {
 	var is999 = $('#lcd').html();
 	if (is999 == '999') {
 	//alert('calling');
+	call=1;
+	CallDone=true;
 	$('#tel_CheckBox').attr('checked', 'checked');
 	$('#keypad').fadeOut('slow');
-	$('#next_Button').attr('href', 'cpr1.htm');
-	$('#next_Button').fadeTo('slow', 1)
+	//$('#right_nav_button').attr('href', 'cpr1.htm');
+	$('#right_nav_button').fadeTo('slow', 1)
 	}
 	
 	
@@ -51,6 +61,28 @@ $(':checkbox').bind('click', function() {
     });
 
 
+$('#right_nav_button').bind('click', function() {
+    var CheckOpacity = $('#right_nav_button').css('opacity');
+    if (CheckOpacity==1){
+    
+    $.ajax({
+			url: "set_responses.php",
+			data: "ab_chin="+ tilt + "&ab_breathing="+ check + "&ab_telephone=" + call,
+			success: function(data){
+                        alert(data);
+                        //Maybe gray out box and change the area to a "success" message
+			}
+                });
+    setTimeout(function() {
+	window.location = 'cpr1.htm';
+    },500);
+    }
+});
+
+
+
+
+
 var TimerRunning = false;
 
 function Start10Sec_Timer()
@@ -60,6 +92,8 @@ function Start10Sec_Timer()
 	//setTimeout(alert('TIMER'), 1000);
     
     setTimeout(function() {
+	check=1;
+	CheckDone=true;
 	$('#check10_CheckBox').attr('checked', 'checked');
 	$('#keypad').fadeIn('slow');       
 	       }, 10000);
@@ -70,9 +104,16 @@ function Start10Sec_Timer()
 
 
 var get_all = setInterval(function() {
+	
+	
+	if (TiltDone==true && CheckDone==true && CallDone==true) {
+	return false;
+    }
+    else {
     $.getJSON('get_all_states.php', function(data) {
     if (data.tilt == '1') {
-    
+	tilt=1;
+    TiltDone=true;
 	var isChecked = $('#chin_CheckBox:checked').val();
 	//alert(isChecked);
 	if (isChecked == undefined)
@@ -92,14 +133,17 @@ var get_all = setInterval(function() {
     }
     
     //if tilt == 0 while timerrunning  is true, block out div as failed?
-	})
+	})}
+    
 }, 1000);
 
 
  
 });
 </script>
-
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
+</script>
 
 </head>
 
@@ -107,37 +151,44 @@ var get_all = setInterval(function() {
     <div id="main">
         <p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
         <div id="left">
-<video class="videocss" src="videos/a_b.mp4" loop width=496 height=368 id="vid_a_b">
+<video class="videocss" src="videos/a_b.mp4" loop width=450 height=368 id="vid_a_b">
         </div>
-    <div id="right" style="position:absolute;right:75px;top:50px;">
-
-
-
-
-
+    <div id="right" style="position:absolute;right:15px;top:50px;">
 
 <form>
-<input type="checkbox" value="tilt" id="chin_CheckBox">Lift Chin<br/>
-<input type="checkbox" value="check10" id="check10_CheckBox">Check for Breathing (10 sec)<br/>
+<input type="checkbox" value="tilt" class="action_checkbox" id="chin_CheckBox">Lift Chin<br/>
+<input type="checkbox" value="check10" class="action_checkbox" id="check10_CheckBox">Check for Breathing </br>(10 sec)<br/>
 
-<input type="checkbox" value="tel" id="tel_CheckBox">Call 999/112
+<input type="checkbox" value="tel" class="action_checkbox" id="tel_CheckBox">Call 999
 
 </form>
     </div>
 <br/>
-<div id="keypad">
-<p id="lcd" style="width:300px;height:100px;font-size:15px;border:2px solid black;"></p>
+<div id="keypad" style="position:absolute;right:30px;top:270px;">
+<p id="lcd" style="width:200px;height:75px;font-size:15px;border:2px solid black;"></p>
 	</br>
 <a id="send_button" class="button" style="width:75px;" >SEND</a>
 <a id="clear_button" class="button" style="width:75px;">CLR</a>
-<p class="tel_button" >9</p>	
+<br/
+<br/>
+<a class="tel_button" style="padding:3px;" >1</a>
+<a class="tel_button" style="padding:3px;" >2</a>
+<a class="tel_button" style="padding:3px;" >3</a>
+<br/>
+<a class="tel_button" style="padding:3px;" >4</a>
+<a class="tel_button" style="padding:3px;" >5</a>
+<a class="tel_button" style="padding:3px;" >6</a>
+<br/>
+<a class="tel_button" style="padding:3px;" >7</a>
+<a class="tel_button" style="padding:3px;" >8</a>
+<a class="tel_button" style="padding:3px;" >9</a>	
 </div>
 
 <br/>
 <br/>
-<div id="button_bar" style="position:absolute;bottom:50px;">
-<a href="airway_breathing1.htm" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Next ></a>
-</div>
+
+<a href="airway_breathing1.htm" id="left_nav_button">Previous</a>  <a id="right_nav_button" style="opacity: 0.4;">Next</a>
+
     </div>
 </body>
 </html>

@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
+</script>
+
+<script type="text/javascript">
+
+       // listener function changes src
+       function GoTo() {
+          window.location = "practice2.htm";
+        }
+       // function adds listener function to ended event -->
+        function myAddListener(){
+         var myVideo = document.getElementsByTagName('video')[0];
+         myVideo.addEventListener('ended',GoTo,false);
+        }
+   </script>
+
+
+<title>Practice 1</title>
+
+</head>
+
+<body onload="myAddListener()">
+    <center>
+<h2>Ready to test your skills in a real scenario?</h2>
+
+<h3> Take a deep breath and press play.</h3>
+<video src="videos/practice1.mp4" id="vid_practice" autobuffer preload controls width=550 height=350></video>
+</br></br></br>
+
+<a href="main_menu.htm" id="left_nav_button">Main</a> <a href="responses2.htm" id="right_nav_button" style="opacity:0;">Start</a>
+    </center>
+</body>
+</html>

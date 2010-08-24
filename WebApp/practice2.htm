@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+ 
+ $('#right_nav_button').bind('click', function() {
+    var CheckOpacity = $('#right_nav_button').css('opacity');
+    if (CheckOpacity==1){
+    
+    $.ajax({
+			url: "set_practice.php",
+			data: "cpr_compressions="+ Compressions + "&cpr_chin="+ Tilt + "&cpr_nose=" + Nose + "&cpr_breaths=" + Breaths,
+			success: function(data){
+                        alert(data);
+                        //Maybe gray out box and change the area to a "success" message
+			}
+                });
+    setTimeout(function() {
+	window.location = 'practice_email.htm';
+    },500);
+    }
+});
+ 
+ 
+ 
+ 
+ var minutes=0;
+ var seconds=0;
+ 
+ var timeupdate = setInterval(function(){
+        if (minutes>=2) {
+            return false;
+        $('#right_nav_button').fadeTo('slow', 1);
+        }
+    else {
+        seconds++
+        if (seconds==60) {
+            minutes++
+            seconds=0;
+        }
+        if (seconds<10) {
+            var SecDisplay = '0'+seconds;
+        }
+        else {
+            SecDisplay=seconds;
+        }
+        $('#seconds_field').text(SecDisplay);
+        $('#minutes_field').text(minutes);    
+    }
+    
+    
+    
+ }, 1000);
+    
+    
+});
+      
+   </script>
+
+
+<title>Practice 2</title>
+
+</head>
+
+<body>
+    <center>
+<h2>Begin First Aid Emergency Actions</h2>
+
+<p id="minutes_field"> </p>
+<p  style="position:relative;left:50px;top:-38px;" id="seconds_field"> </p>
+</span>
+<a href="main_menu.htm" id="left_nav_button">Main</a> <a id="right_nav_button" style="opacity:0;">View Results</a>
+    </center>
+</body>
+</html>

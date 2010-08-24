@@ -1,28 +1,27 @@
 <html>
 
 <head>
-      <meta name="apple-mobile-web-app-capable"
-      content="yes" />
-    <meta name="viewport"
-    content="user-scalable=no, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
+</script>
 
 
-<link rel="stylesheet" type="text/css" href="style.css">
-
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<title>
-Check for Danger</title>
+<title>Check for Danger</title>
 
 </head>
 
 <body>
 <center>
-<h1>Tap to watch demo about <b>checking for danger:</b></h1>
+<p>Watch video below about <b>checking for danger:</b></p>
 
-VIDEO GOES HERE
+<video src="videos/danger_demo.mp4" id="vid_intro" loop autobuffer preload controls width=600 height=350></video>
 </br></br></br></br>
 
-<a href="tutorial_menu.htm" class="button">< Previous</a> <a href="responses1.htm" class="button">Next Tutorial > </a>
+<a href="tutorial_menu.htm" id="left_nav_button">Previous</a> <img src="images/progress1.png"> <a href="responses1.htm" id="right_nav_button">Next Tutorial</a>
 
 </body>
 </html>

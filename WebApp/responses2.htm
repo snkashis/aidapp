@@ -1,80 +1,101 @@
 <html>
 
 <head>
-        <meta name="apple-mobile-web-app-capable"
-      content="yes" />
-    <meta name="viewport"
-    content="user-scalable=no, width=device-width" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
     <link rel="stylesheet" type="text/css" href="style.css">
 
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<title>
-Responses 2</title>
+<title>Responses 2</title>
 
 
     <script>
  $(document).ready(function(){
+    
+    
+    
 var ShakeDone = false;
 var ShoutDone = false;
 var shake=0;
 var shout=0;
+var ShouldRun = true;
 
+document.getElementById('vid_responses').load();
+document.getElementById('vid_responses').play();
 
 //trying to remove the ability to click checkboxs
-/*$(':checkbox').bind('click', function() {
+$(':checkbox').bind('click', function() {
     this.blur();
   event.preventDefault();
     });
-*/
+
+
+$('#right_nav_button').bind('click', function() {
+    
+    var CheckOpacity = $('#right_nav_button').css('opacity');
+    if (CheckOpacity==1){
+    $.ajax({
+			url: "set_responses.php",
+			data: "resp_shake="+ shake + "&resp_shout="+ shout,
+			success: function(data){
+                        alert(data);
+                        //Maybe gray out box and change the area to a "success" message
+			}
+                });
+    setTimeout(function() {
+	window.location = 'airway_breathing1.htm';
+    },500);
+    }
+});
+
 
 var get_all = setInterval(function() {
+    if (ShakeDone==true && ShoutDone==true) {
+	return false;
+    }
+    else {
+    
     $.getJSON('get_all_states.php', function(data) {
 	
     if (ShakeDone == false) {	
     if (data.shake == '1') {
 	$('#ShakeCheckBox').attr('checked', 'checked');
 	shake=1;
-	
+	$('#right_nav_button').fadeTo('slow', 1);
+	//$('#right_nav_button').attr('href', 'airway_breathing1.htm');
 	ShakeDone = true;
-    }
-    
-    
-    }
-    if (ShoutDone == false) {
-    if (data.audio == '1') {
-	$('#ShoutCheckBox').attr('checked', 'checked');
-	shout=1;
-	$('#next_Button').fadeTo('slow', 1);
-	$('#next_Button').attr('href', 'airway_breathing1.htm');
-	ShoutDone = true;
 	
-	var isChecked = $('#ShakeCheckBox:checked').val();
+	var isChecked = $('#ShoutCheckBox:checked').val();
 	//alert(isChecked);
 	if (isChecked == undefined)
 	{
-	    	    $('#ShakeCheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	    	    $('#ShoutCheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+		    ShoutDone=true;
 
 	}
 	
 	//set "Results" 
-	$.ajax({
-			url: "set_responses.php",
-			data: "shake="+ shake_val + "&shout="+ shout_val,
-			success: function(data){
-                        //alert(data);
-                        //Maybe gray out box and change the area to a "success" message
-			}
-                });
-	
-    }
-	
 	
 	
 	
     }
     
+    }
+    
+    
+    
+    if (ShoutDone == false) {
+    if (data.audio == '1') {
+	$('#ShoutCheckBox').attr('checked', 'checked');
+	shout=1;
+	
+	ShoutDone = true;
+    }
+    }
+    
 	})
-}, 1000);
+    }
+    }, 1000);
 
  
 });
@@ -84,20 +105,23 @@ var get_all = setInterval(function() {
 </head>
 
 <body>
-<h1>Check for Responses 2</h1>
+    <div id="main">
+<p>Now it's YOUR turn...<b>practice</b> on the doll the steps you have previously learned.</p>
 
-VIDEO ANIMATION GOES HERE
-
+<div id="left">
+<video class="videocss" src="videos/responses2.mp4" loop width=496 height=368 id="vid_responses">
+        </div>
+<div id="right" style="position:absolute;right:35px;top:50px;">
 <form>
-<input type="checkbox" value="shake" id="ShakeCheckBox">Shake Shoulders<br/>
-<input type="checkbox" value="shout" id="ShoutCheckBox">Shout in both Ears<br/>
-
+<input type="checkbox" value="shout" class="action_checkbox" id="ShoutCheckBox">Shout in Ears<br/>
+<input type="checkbox" value="shake" class="action_checkbox" id="ShakeCheckBox">Tap Shoulders<br/>
 </form>
 
+</div>
 <br/>
 <br/>
 <br/>
-<a href="responses1.htm" class="button" id="prev_Button">< Previous</a>  <a class="button" id="next_Button" style="opacity: 0.4;">Next ></a>
-
+<a href="responses1.htm" id="left_nav_button">Previous</a>  <a class="button" id="right_nav_button" style="opacity: 0.4;">Next</a>
+    </div>
 </body>
 </html>

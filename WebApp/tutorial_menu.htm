@@ -1,30 +1,22 @@
 <html>
 
 <head>
-     <meta name="apple-mobile-web-app-capable"
-      content="yes" />
-    <meta name="viewport"
-    content="user-scalable=no, width=device-width" />
-    
-<title>
-Tutorial Menu
-</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+<title>Tutorial Menu</title>
 
-<link rel="stylesheet" type="text/css" href="style.css">
 
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-
-<script>
-$(document).ready(function(){
-function BlockMove(event) {
-  event.preventDefault();
- }
- }
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
 </script>
+
 <style>
 li {
 padding:20px;
 font-size:40px;
+font-family:'Futura';
+-webkit-border-radius:20px;
 }
 
 #menu {
@@ -37,19 +29,22 @@ font-size:40px;
     padding:10px;
 }
 
+a {
+    -webkit-border-radius:20px;
+}
 
 </style>
 
 </head>
 
-<body ontouchmove="BlockMove(event);">
-Please choose a tutorial below.
+<body>
+<h2>Please choose a tutorial below.</h2>
 <div id="menu">
 <ol>
 <li><a href="danger.htm" class="button">Check for danger</a></li>
 <li><a href="responses1.htm" class="button">Check for response</a></li>
-<li><a href="airway_breathing.htm" class="button">Check Airway & Breathing</a></li>
-<li><a href="compressions.htm" class="button">Begin Compressions</a></li>
+<li><a href="airway_breathing1.htm" class="button">Check Airway & Breathing</a></li>
+<li><a href="cpr1.htm" class="button">Begin Compressions</a></li>
 </ol>
 </div>
 <a href="main_menu.htm" class="button" style="font-size:30px;">Main</a>
