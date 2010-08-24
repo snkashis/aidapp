@@ -1,8 +1,31 @@
-import de.bezier.data.sql.*;
+import processing.core.*; 
+import processing.xml.*; 
 
-import processing.serial.*;
+import de.bezier.data.sql.*; 
+import processing.serial.*; 
+import krister.Ess.*; 
 
-import krister.Ess.*;
+import java.applet.*; 
+import java.awt.Dimension; 
+import java.awt.Frame; 
+import java.awt.event.MouseEvent; 
+import java.awt.event.KeyEvent; 
+import java.awt.event.FocusEvent; 
+import java.awt.Image; 
+import java.io.*; 
+import java.net.*; 
+import java.text.*; 
+import java.util.*; 
+import java.util.zip.*; 
+import java.util.regex.*; 
+
+public class Processing extends PApplet {
+
+
+
+
+
+
 
 AudioInput myinput;
 int bufferSize=512;
@@ -22,7 +45,7 @@ int conv_Tilt, conv_Force1, conv_Force2, conv_Temp, conv_Audio, conv_Shake, conv
 boolean UpdateTilt, UpdateForce1, UpdateForce2, UpdateTemp, UpdateAudio, UpdateShake = false;
 
 
-void setup() {
+public void setup() {
   Ess.start(this);
   myinput=new AudioInput(bufferSize);
 
@@ -30,9 +53,9 @@ void setup() {
   myFFT=new FFT();
   
   // start the sound looping forever
-  myFFT.damp(.3);
+  myFFT.damp(.3f);
   myFFT.equalizer(true);
-  myFFT.limits(.005,.05);
+  myFFT.limits(.005f,.05f);
   // List all the available serial ports: 
   println(Serial.list()); 
   myPort = new Serial(this, Serial.list()[0], 9600); 
@@ -46,7 +69,7 @@ void setup() {
     
 }
 
-void draw () {
+public void draw () {
 background(0); 
   myPort.write(65);
   text("received: " + inString, 10,50); 
@@ -56,11 +79,11 @@ if (SQL_STRING != null)
 }
 }
 
-void serialEvent(Serial myPort) { 
+public void serialEvent(Serial myPort) { 
   inString = myPort.readStringUntil('*'); 
   if (inString != null) {
     println("Receiving: " + inString);
-    float[] vals = float(splitTokens(inString,",*"));
+    float[] vals = PApplet.parseFloat(splitTokens(inString,",*"));
     a = vals[0];
     b = vals[1];
     c = vals[2];
@@ -99,7 +122,7 @@ void serialEvent(Serial myPort) {
     conv_Force2 = 0;
     }
     
-    if (d >= 0.77) {
+    if (d >= 0.77f) {
       conv_Temp = 1;
     }
     else {
@@ -195,7 +218,7 @@ UpdateShake = false;
 
 
 
-void SQL_Execute(String column, int value) {
+public void SQL_Execute(String column, int value) {
 
 
     if ( msql.connect() )
@@ -227,3 +250,7 @@ public void stop() {
   super.stop();
 }
 
+  static public void main(String args[]) {
+    PApplet.main(new String[] { "--bgcolor=#FFFFFF", "Processing" });
+  }
+}

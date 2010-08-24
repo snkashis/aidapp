@@ -7,68 +7,69 @@ FMP 2010
 int TempPin = 0;
 int forcePin1 = 1;
 int forcePin2 = 2;    // the pin the FSR is attached to
+int TiltPin = 4;
+     
 
-//LadyAda
-int inPin = 2;         // the number of the input pin
-int outPin = 13;       // the number of the output pin
 
-int LEDstate = HIGH;      // the current state of the output pin
-int reading;           // the current reading from the input pin
-int previous = LOW;    // the previous reading from the input pin
+const int knockSensor = 3;  // the piezo is connected to analog pin 3
+const int threshold = 500;  // threshold value to decide when the detected sound is a knock or not
+const int knockSensor2 = 5;
 
-// the follow variables are long's because the time, measured in miliseconds,
-// will quickly become a bigger number than can be stored in an int.
-long time = 0;         // the last time the output pin was toggled
-long debounce = 50;   // the debounce time, increase if the output flickers
+// these variables will change:
+int sensorReading = 0;      // variable to store the value read from the sensor pin
+int ShakeReading = 0;
 
-//LadyAda end
+int sensorReading2 = 0;      // variable to store the value read from the sensor pin
+int ShakeReading2 = 0;
 
 
 
 
 void setup() {
 Serial.begin(9600); // Begin Serial Communication with computer
-pinMode(inPin, INPUT);
-digitalWrite(inPin, HIGH);   // turn on the built in pull-up resistor
-pinMode(outPin, OUTPUT);  
-
 }
 
 
 void loop() {
-//Tilt Sensor
-int switchstate;
-  
-  reading = digitalRead(inPin);
-  
-  // If the switch changed, due to bounce or pressing...
-  if (reading != previous) {
-    // reset the debouncing timer
-    time = millis();
-  } 
-    
-  if ((millis() - time) > debounce) {
-     // whatever the switch is at, its been there for a long time
-     // so lets settle on it!
-     switchstate = reading;
 
-     // Now invert the output on the pin13 LED
-    if (switchstate == HIGH)
-      LEDstate = LOW;
-    else
-      LEDstate = HIGH;
+
+
+//Shake Sensor = piezo
+sensorReading = analogRead(knockSensor); 
+
+if (sensorReading >= threshold) {
+    ShakeReading = 1;     
+    //Serial.println("Knock!");         
   }
-  digitalWrite(outPin, LEDstate);
-
-  // Save the last reading so we keep a running tally
-  previous = reading;
-
+else {
+  ShakeReading = 0;
+}  
 
 
+sensorReading2 = analogRead(knockSensor2); 
+
+if (sensorReading2 >= threshold) {
+    ShakeReading2 = 1;     
+    //Serial.println("Knock!");         
+  }
+else {
+  ShakeReading2 = 0;
+}  
+                                           
+// Tilt (Chin) Sensor = light            
+int TiltReading = analogRead(TiltPin);
+
+                                        
+ TiltReading = map(TiltReading, 0, 900, 0, 255); 
+         //adjust the value 0 to 900 to
+         //span 0 to 255
 
 
 
-  
+ TiltReading = constrain(TiltReading, 0, 255);//make sure the 
+                                           //value is betwween 
+                                           //0 and 255
+                                           
   
 //Force Sensors
 int Force1 = analogRead(forcePin1) / 4; //the voltage on the pin divded by 4 (to scale from 10 bits (0-1024) to 8 (0-255)  
@@ -97,17 +98,22 @@ float TempVoltage = reading * 5.0 / 1024;
 //Serial Output
 if (Serial.available() > 0) {
 Serial.read();
-Serial.print(switchstate,DEC);
+Serial.print(TiltReading,DEC);
 Serial.print(',', BYTE);
 Serial.print(Force1,DEC);
 Serial.print(',',BYTE);
 Serial.print(Force2,DEC);
 Serial.print(',',BYTE);
 Serial.print(TempVoltage,DEC);
+Serial.print(',',BYTE);
+Serial.print(ShakeReading,DEC);
+Serial.print(',',BYTE);
+Serial.print(ShakeReading2,DEC);
 Serial.print('*', BYTE);
 delay(1000);
 }
 
+//delay(500);
 //Debug Printing
 /*
 Serial.print("Tilt detect is");
@@ -118,6 +124,7 @@ Serial.print("Force 2 is");
 Serial.println(Force2);
 Serial.print("Temp Voltage is ") ;
 Serial.println(TempVoltage);
+Serial.println(ShakeReading);
 delay(1000);
 */
 
