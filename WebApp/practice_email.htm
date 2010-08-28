@@ -12,57 +12,339 @@ document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
     <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
     <style>
     
-    #email_id {
-	padding: 5px;
-	font-size: 15px;
-	text-shadow: 0px 1px 0px #fff;
-	outline: none;
-	background: -webkit-gradient(linear, left top, left bottom, from(#bcbcbe), to(#ffffff));
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #717171;
-	-webkit-box-shadow: 1px 1px 0px #efefef;	
-	box-shadow:  1px 1px 0px #efefef;
-}
 
-#email_id:focus {
-	-webkit-box-shadow: 0px 0px 5px #007eff;
-	
-	box-shadow: 0px 0px 5px #007eff;
-}
     </style>
 
 <script>
 $(document).ready(function(){
+    
+    $('#right_nav_button').bind('click', function() {
+    
+    $.get("clear_all.php");
+    setTimeout(function() {
+	window.location = 'video_splash.htm';
+    },500);
+    
+});    
+    
+    
+    $(':checkbox').bind('click', function() {
+    this.blur();
+  event.preventDefault();
+    });
+    
+     var danger_expanded = 0;
+var response_expanded = 1;
+var ab_expanded = 1;
+var cpr_expanded = 1;
+
+$.getJSON('get_all_practice.php', function(data) {
+
+if(data.resp_shake=='1'){
+    $('#resp_shake_Checkbox').attr('checked', 'checked');
+}
+if(data.resp_shout=='1'){
+    $('#resp_shout_Checkbox').attr('checked', 'checked');
+}
+
+if(data.resp_shake=='1' && data.resp_shout=='1') {
+    $('#response_heading').removeClass();
+    $('#response_heading').addClass('succeed')
+    $('#response_results').hide();
+    $('#response_arrow').attr('src', 'images/arrow1.png');
+    response_expanded=0;
+}
+
+
+if(data.ab_chin=='1'){
+    $('#ab_chin_Checkbox').attr('checked', 'checked');
+}
+if(data.ab_breathing=='1'){
+    $('#ab_breathing_Checkbox').attr('checked', 'checked');
+}
+
+if(data.ab_telephone=='1'){
+    $('#ab_telephone_Checkbox').attr('checked', 'checked');
+}
+
+if(data.ab_chin=='1' && data.ab_breathing=='1' && data.ab_telephone=='1') {
+    $('#ab_heading').removeClass();
+    $('#ab_heading').addClass('succeed')
+    $('#ab_results').hide();
+    $('#a_b_arrow').attr('src', 'images/arrow1.png');
+    ab_expanded=0;
+    
+}
+
+if(data.cpr_compressions=='1'){
+    $('#cpr_compressions_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_chin=='1'){
+    $('#cpr_chin_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_nose=='1'){
+    $('#cpr_nose_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_breaths=='1'){
+    $('#cpr_breaths_Checkbox').attr('checked', 'checked');
+}
+
+if(data.cpr_compressions=='1' && data.cpr_chin=='1' && data.cpr_nose=='1' && data.cpr_breaths=='1') {
+    $('#cpr_heading').removeClass();
+    $('#cpr_heading').addClass('succeed')
+    $('#cpr_results').hide();
+    $('#cpr_arrow').attr('src', 'images/arrow1.png');
+     
+     cpr_expanded=0;
+}
+
+
+
+
+});
+ 
+
+    
+
+//$('.results').show();
+
+
+
+$('#response_heading').click(function() {
+    $('#response_results').toggle('slow');
+    if (response_expanded==0) {
+    $('#response_arrow').attr('src', 'images/arrow2.png');
+    
+    response_expanded = 1;
+    }
+    else {
+     $('#response_arrow').attr('src', 'images/arrow1.png');
+     
+     response_expanded=0;
+    }
+ });
+
+$('#ab_heading').click(function() {
+    $('#ab_results').toggle('slow');
+    if (ab_expanded==0) {
+    $('#a_b_arrow').attr('src', 'images/arrow2.png');
+    
+    ab_expanded = 1;
+    }
+    else {
+     $('#a_b_arrow').attr('src', 'images/arrow1.png');
+     
+     ab_expanded=0;
+    }
+ });
+
+$('#cpr_heading').click(function() {
+    $('#cpr_results').toggle('slow');
+    
+    if (cpr_expanded==0) {
+    $('#cpr_arrow').attr('src', 'images/arrow2.png');
+    
+    cpr_expanded = 1;
+    }
+    else {
+     $('#cpr_arrow').attr('src', 'images/arrow1.png');
+     
+     cpr_expanded=0;
+    }
+    
+ });
+    
+    
 	$('#SubmitButton').click(function(){
+	 
+	    $('#email_section').hide(); 
 	// we want to store the values from the form input box, then send via ajax below
+	
 	var email_id  = $("#email_id").val();
         
 		$.ajax({
-			url: "send_results.php",
+			url: "email.php",
 			data: "email="+ email_id,
 			success: function(data){
                         //alert(data);
-                        //Maybe gray out box and change the area to a "success" message
+			
+                        $('#email_section').html(data).delay(500).fadeIn();
+			//$('#email_section').fadeIn();
+			
 			}
                 });
 	return false;
-	});
+	
+	//window.location = 'practice_results.htm';
+	});   
+	
 });
 
+//<form action="" method="get">
+
+
 </script>
+
+
+<style>
+
+li {
+    width:250px;
+    padding-left:2px;
+    padding-top:5px;
+    padding-bottom:5px;
+    -webkit-border-radius:2px;
+	-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
+    list-style:none;
+    font-size:12px;
+    color:white;
+    font-family:'Futura-CondensedExtraBold';
+    letter-spacing:1px;
+    text-shadow: 0px 1px 1px #000;
+    
+}
+.succeed {
+   
+background:-webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.13, rgb(97,230,101)),
+    color-stop(0.31, rgb(97,230,102)),
+    color-stop(0.99, rgb(255,255,255))
+);
+}
+
+.failure {
+    background:-webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.13, rgb(255,0,0)),
+    color-stop(0.31, rgb(255,0,0)),
+    color-stop(0.99, rgb(255,255,255))
+)
+
+}
+
+.arrows {
+    display:inline;
+    padding-left:-5px;
+    position:absolute;
+    left:250px;
+    
+}
+
+.results {
+    margin-left:10px;
+    
+    }
+
+td {
+    font-family:'Futura';
+    font-size:12px;
+}
+
+#congratulations {
+    font-family:'Futura-CondensedExtraBold';
+    font-size:32px;
+    letter-spacing:2px;
+    text-shadow: 1px 1px 4px #000;
+    
+}
+
+.email_button {
+font-family:'Futura-CondensedExtraBold';
+width: 7em;
+padding: .2em;
+color: #ffffff;
+text-shadow: 1px 1px 1px #000;
+border: solid thin black;
+position:relative;
+letter-spacing:1.5px;
+left:-4px;
+height:37px;
+border-radius: 0em .7em .7em 0em;
+-webkit-box-shadow: 2px 2px 3px #999;
+box-shadow: 2px 2px 2px #bbb;
+background-color: #ce401c;
+background-image: -webkit-gradient(linear, left top, left bottom, from(#e9ede8), to(#3333FF),color-stop(0.4, #3399FF));
+}
+
+</style>
     
 </head>
 <body>
-    
-    <h1>Congratulations!</h1>
-    <p>Enter your email so that we can send your results and keep in contact about First Aid and how to get more involved.
-<br/>
-<form action="" method="get">
-<input type="email" id="email_id" placeholder="user@example.com">
-<input name="submit" value="Submit" id="SubmitButton" type="submit" class="button">
-</center>
+<div id="main" style="margin-left:80px;">    
+    <p id="congratulations" >Congratulations!</p>
+    <div id="bringup" style="position:relative;bottom:35px;">
+	<div id="email_section">
+    <p style="width:600px;font-size:15px;">Enter your email so we can send your results and information about how to get involved in local First Aid organisations.</p>
+    <form>
+<input type="email" id="email_id" placeholder="jane@gmail.com" style="font-size:18px;font-family:'Futura';" autocorrect="off" autocapitalize="off">
+<input id="SubmitButton" type="submit" class="email_button" style="font-size:18px;">
 </form>
-<a href="practice_results.htm" id="right_nav_button">Skip</a>    
+	</div>
+<p style="font-family:'Futura-CondensedExtraBold';">Here are the results from your Practice Quiz:</p>
+<ul style="position:relative;bottom:14px;">
+    <li id="danger_heading" class="succeed">Check for Danger </li>
+    <!--<div id="danger_results" class="results">Danger RESULTS</div> -->
+    
+    <li id="response_heading" class="failure" >Check for Response <img class="arrows" id="response_arrow" src="images/arrow2.png" width=15></li>
+    <div id="response_results" class="results">
+        
+        <table width=300>
+            <tr>
+            <td style="width:150px;">Shout in both ears</td><td width="100"><input type=checkbox id="resp_shout_Checkbox"></td>    
+            </tr>
+            <tr>
+            <td style="width:150px;">Tap shoulders</td><td width="100"><input type=checkbox id="resp_shake_Checkbox"></td>
+            </tr> 
+        </table>  
+    </div>
+    
+    <li id="ab_heading" class="failure">Airway & Breathing <img class="arrows" id="a_b_arrow" src="images/arrow2.png" width=15></li>
+    <div id="ab_results" class="results">
+    <table width=300>
+    <tr>
+            <td style="width:150px;">Tilt Head</td><td width="100"><input type=checkbox id="ab_chin_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Check for Breathing</td><td width="100"><input type=checkbox id="ab_breathing_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Call 999</td><td width="100"><input type=checkbox id="ab_telephone_Checkbox"></td>
+            </tr>    
+    </table>
+    </div>
+    
+    <li id ="cpr_heading" class="failure">Learn CPR <img class="arrows" id="cpr_arrow" src="images/arrow2.png" width=15></li>
+    <div id="cpr_results" class="results">
+    <table width=300>
+            <tr>
+            <td style="width:150px;">Compressions(30x)</td><td width="100"><input type=checkbox id="cpr_compressions_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Tilt Head</td><td width="100"><input type=checkbox id="cpr_chin_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Pinch Nose</td><td width="100"><input type=checkbox id="cpr_nose_Checkbox"></td>
+            </tr>
+            <tr>
+            <td style="width:150px;">Rescue Breaths (2x)</td><td width="100"><input type=checkbox id="cpr_breaths_Checkbox"></td>
+            </tr>
+        </table>      
+    
+    </div>
+    
+</ul>
+    </div>
+</div>
+
+
+<a href="main_menu.htm" id="left_nav_button">Main</a><a id="right_nav_button">Quit</a>    
 </body>
 </html>

@@ -31,7 +31,7 @@ $('#right_nav_button').bind('click', function() {
 			url: "set_responses.php",
 			data: "cpr_compressions="+ Compressions + "&cpr_chin="+ Tilt + "&cpr_nose=" + Nose + "&cpr_breaths=" + Breaths,
 			success: function(data){
-                        alert(data);
+                        //alert(data);
                         //Maybe gray out box and change the area to a "success" message
 			}
                 });
@@ -48,7 +48,7 @@ $(':checkbox').bind('click', function() {
   event.preventDefault();
     });
 
-
+//DEBUG Below
 $('#comp_button').bind('click', function(){
 compression_Count++;
 $('#count_area').text(compression_Count);
@@ -60,6 +60,7 @@ Breath_Count++;
 $('#breath_count_area').text(Breath_Count);
 }
 );
+//End debug
 
 document.getElementById('vid_cpr').load();
 document.getElementById('vid_cpr').play();
@@ -160,25 +161,22 @@ var get_all = setInterval(function() {
         </div>
     <div id="right" style="position:absolute;right:10px;top:50px;">
 
-<br/>
-
-<br/>
 <form>
-<input type="checkbox" class="action_checkbox" id="compressions_CheckBox">Compressions (30X)<br/>
-<input type="checkbox" class="action_checkbox" id="chin_CheckBox">Lift Chin<br/>
-<input type="checkbox" class="action_checkbox" id="nose_CheckBox">Pinch Nose<br/>
+<input type="checkbox" class="action_checkbox" id="compressions_CheckBox">Compressions (30X)<br/><br/>
+<input type="checkbox" class="action_checkbox" id="chin_CheckBox">Tilt Head<br/><br/>
+<input type="checkbox" class="action_checkbox" id="nose_CheckBox">Pinch Nose<br/><br/>
 <input type="checkbox" class="action_checkbox" id="breaths_CheckBox">Rescue Breaths (2X)
 
 </form>
-
-<p id="comp_button">Comp COUNT:</p><br/>
-<p id="count_area"></p>
+<div id="comp_debug" style="position:relative;top:-285px;left:160px;">
+<a id="comp_button" style="font-size:18px;font-family:'Futura';">Count:</a>
+<p id="count_area" style="font-size:18px;display:inline;"></p>
 <br/>
-
-<p id="breath_button">Breath COUNT:</p><br/>
-<p id="breath_count_area"></p>
-<br/>
-
+</div>
+<div id="breath_debug" style="display:none;"
+<p id="breath_button">Breath Count:</p>
+<p id="breath_count_area" style="font-size:18px;"></p>
+    </div>
     </div>
     
 <a href="cpr1.htm" id="left_nav_button">Previous</a>  <a id="right_nav_button" style="opacity: 0.4;">Done</a>

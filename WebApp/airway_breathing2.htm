@@ -1,17 +1,15 @@
 <html>
 
 <head>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="viewport" content="user-scalable=no, width=device-width" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
+	<link rel="stylesheet" type="text/css" href="style.css">
 
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<title>
-Airway and Breathing 2</title>
+<title>Airway and Breathing 2</title>
 
-
-    <script>
- $(document).ready(function(){
+<script>
+$(document).ready(function(){
 var TiltDone = false;
 var CheckDone = false;
 var CallDone = false;
@@ -20,39 +18,41 @@ var check = 0;
 var call = 0;
 	
 	
-	document.getElementById('vid_a_b').load();
-            document.getElementById('vid_a_b').play();
+document.getElementById('vid_a_b').load();
+document.getElementById('vid_a_b').play();
 
-$('#keypad').hide();
-var key_digit;
+
 $('.tel_button').click(function() {
-	key_digit = ($(this).html());
-	//alert(digit);
-	$('#lcd').html($('#lcd').html()+key_digit);
+    if ($('#lcd').html().length<3){
+	$('#lcd').html($('#lcd').html()+$(this).html());
+    }
 }
 );
 
-$('#clear_button').click(function() {
+$('#clear_button,#td_clear').click(function() {
 	$('#lcd').html("");
 	
 })
 
-$('#send_button').click(function() {
-	var is999 = $('#lcd').html();
-	if (is999 == '999') {
-	//alert('calling');
+$('#send_button,#td_send').click(function() {
+	if ($('#lcd').html() == '999') {
 	call=1;
 	CallDone=true;
 	$('#tel_CheckBox').attr('checked', 'checked');
-	$('#keypad').fadeOut('slow');
-	//$('#right_nav_button').attr('href', 'cpr1.htm');
-	$('#right_nav_button').fadeTo('slow', 1)
+        $('#phone_icon,#keypad').hide('slow');
+	$('#right_nav_button').fadeTo('slow', 1);
 	}
+        else {
+            $('#lcd').html("");
+        }
 	
 	
 })
 
-
+$('#phone_icon').click(function (){
+    $('#keypad').toggle('slow');
+}
+);
 
 //trying to remove the ability to click checkboxs
 $(':checkbox').bind('click', function() {
@@ -69,7 +69,7 @@ $('#right_nav_button').bind('click', function() {
 			url: "set_responses.php",
 			data: "ab_chin="+ tilt + "&ab_breathing="+ check + "&ab_telephone=" + call,
 			success: function(data){
-                        alert(data);
+                        //alert(data);
                         //Maybe gray out box and change the area to a "success" message
 			}
                 });
@@ -89,16 +89,14 @@ function Start10Sec_Timer()
   {
 	
 	TimerRunning = true;
-	//setTimeout(alert('TIMER'), 1000);
     
     setTimeout(function() {
+	if (TimerRunning==true) {
 	check=1;
 	CheckDone=true;
 	$('#check10_CheckBox').attr('checked', 'checked');
-	$('#keypad').fadeIn('slow');       
+	}
 	       }, 10000);
-    
- //Pop up telephone
 
   }
 
@@ -130,9 +128,17 @@ var get_all = setInterval(function() {
 	}
 	
 	
+	
     }
     
-    //if tilt == 0 while timerrunning  is true, block out div as failed?
+    else if (data.tilt == '0') {
+	if(TimerRunning == true) {
+	TimerRunning=false;
+	$('#check10_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	CheckDone=true;
+	}
+	
+    }
 	})}
     
 }, 1000);
@@ -156,32 +162,42 @@ document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
     <div id="right" style="position:absolute;right:15px;top:50px;">
 
 <form>
-<input type="checkbox" value="tilt" class="action_checkbox" id="chin_CheckBox">Lift Chin<br/>
-<input type="checkbox" value="check10" class="action_checkbox" id="check10_CheckBox">Check for Breathing </br>(10 sec)<br/>
+<input type="checkbox" value="tilt" class="action_checkbox" id="chin_CheckBox">Tilt Head<br/>
+<input type="checkbox" value="check10" class="action_checkbox" id="check10_CheckBox">Check for Breathing <br/>(10 sec)<br/>
 
 <input type="checkbox" value="tel" class="action_checkbox" id="tel_CheckBox">Call 999
 
 </form>
     </div>
 <br/>
-<div id="keypad" style="position:absolute;right:30px;top:270px;">
-<p id="lcd" style="width:200px;height:75px;font-size:15px;border:2px solid black;"></p>
-	</br>
-<a id="send_button" class="button" style="width:75px;" >SEND</a>
-<a id="clear_button" class="button" style="width:75px;">CLR</a>
-<br/
-<br/>
-<a class="tel_button" style="padding:3px;" >1</a>
-<a class="tel_button" style="padding:3px;" >2</a>
-<a class="tel_button" style="padding:3px;" >3</a>
-<br/>
-<a class="tel_button" style="padding:3px;" >4</a>
-<a class="tel_button" style="padding:3px;" >5</a>
-<a class="tel_button" style="padding:3px;" >6</a>
-<br/>
-<a class="tel_button" style="padding:3px;" >7</a>
-<a class="tel_button" style="padding:3px;" >8</a>
-<a class="tel_button" style="padding:3px;" >9</a>	
+<img src="images/phone.png" id="phone_icon" width=75 style="position:absolute;right:225px;top:250px;">
+<div id="keypad" style="position:absolute;right:50px;top:275px;display:none;">
+
+<table border="0" cellspacing="0px" cellpadding="0px">
+  <tr>
+    <td colspan=3><p id="lcd" style="text-align:right;height:35px;font-size:25px;background-color:#151c26;color:white;"></p> </td>
+  </tr>
+  
+  <tr>
+    
+<td><a class="tel_button">1</a></td>
+<td><a class="tel_button">2</a></td>
+<td><a class="tel_button">3</a></td>
+  </tr>
+<tr>
+<td><a class="tel_button" >4</a></td>
+<td><a class="tel_button" >5</a></td>
+<td><a class="tel_button" >6</a></td>
+  </tr>
+  <tr>
+<td><a class="tel_button" >7</a></td>
+<td><a class="tel_button" >8</a></td>
+<td><a class="tel_button" >9</a></td>	
+  </tr>
+  <tr>
+    <td colspan=2 style="background-color:#21a31a;text-align:center;height:35px;" id="td_send"><a id="send_button" style="background-color:#21a31a;color:white;text-align:center;height:35px;width:100px;" >Call</a></td><td id="td_clear" style="vertical-align:middle;text-align:center;background-color:#151c26;"><center><img src="images/clear.png" style="vertical-align:center;" id="clear_button"></center></td>
+  </tr>
+</table>
 </div>
 
 <br/>

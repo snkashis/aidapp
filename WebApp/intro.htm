@@ -12,25 +12,33 @@ Introduction
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="application/x-javascript">
 document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
-
-
 </script>
+
 
 <script>
 $(document).ready(function(){
 document.getElementById('vid_intro').load();
 document.getElementById('vid_intro').play();
+
+setTimeout(function() {
+    window.location = "main_menu.htm";
+}
+    , 16000);
+
+
+
+
 });
+
 </script>
 </head>
 
 <body>
-
 <center>
-<video src="videos/meet_andy.mov" id="vid_intro"  autobuffer preload width=600 height=450></video>
-
+<video src="videos/meet_andy.mov" id="vid_intro"  autobuffer preload width=1024 height=768></video>
 
 </center>
-</div>
+<a href="main_menu.htm" style="position:absolute;bottom:-125px;right:-100px;font-size:20px;font-family:'Futura';color:black;">Skip</a>
+
 </body>
 </html>

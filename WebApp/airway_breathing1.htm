@@ -1,26 +1,40 @@
 <html>
 
 <head>
-        <meta name="apple-mobile-web-app-capable"
-      content="yes" />
-    <meta name="viewport"
-    content="user-scalable=no, width=device-width" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport"content="user-scalable=no, width=device-width" />
+        <link rel="stylesheet" type="text/css" href="style.css">
 
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
+function GoTo() {
+    window.location = "airway_breathing2.htm";
+}
+
+function VideoPlay() {        
+document.getElementById('vid_intro').load();
+document.getElementById('vid_intro').play();     
+}
+</script>
 <title>
 Airway & Breathing 1</title>
 
 </head>
 
-<body>
+<body onload="VideoPlay();">
         <center>
-<p>Tap to watch demo about <b>Airway & Breathing: </b></p>
+<p class="description">Watch video below about <b>Airway & Breathing: </b></p>
 
-<video src="videos/ab_demo.mp4" id="vid_intro" autobuffer preload controls width=600 height=350></video>
+<video src="videos/ab_demo.mp4" id="vid_intro" autobuffer preload controls width=600 height=350 onended="GoTo();"></video>
 </br></br></br></br>
 
-<a href="responses2.htm" id="left_nav_button">Previous</a> <img src="images/progress3.png"> <a href="airway_breathing2.htm" id="right_nav_button">Next</a>
+<a href="responses2.htm" id="left_nav_button">Previous</a> <img id="Image-Maps_2201008271220522" src="images/progress3.png" class="progress_bar"  usemap="#Image-Maps_2201008271220522" border="0" width="360" height="55" alt="" />
+<map id="_Image-Maps_2201008271220522" name="Image-Maps_2201008271220522">
+<area shape="rect" coords="2,0,52,50" href="danger.htm" alt="" title=""    />
+<area shape="rect" coords="107,0,157,50" href="responses1.htm" alt="" title=""    />
+<area shape="rect" coords="206,0,256,50" href="airway_breathing1.htm" alt="" title=""    />
+<area shape="rect" coords="305,0,355,50" href="cpr1.htm" alt="" title=""    />
+</map> <a href="airway_breathing2.htm" id="right_nav_button">Next</a>
 
 
 </center>

@@ -7,30 +7,48 @@
         <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 
 <script type="application/x-javascript">
-document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
+
 </script>
 
 <script type="text/javascript">
 $(document).ready(function(){
+    
+var PracticeRun=true;    
+    
+    $(':checkbox').bind('click', function() {
+    this.blur();
+  event.preventDefault();
+    });
+    
+    //DEBUG Below
+$('#comp_button').bind('click', function(){
+compression_Count++;
+$('#count_area').text(compression_Count);
+}
+);
+
+$('#breath_button').bind('click', function(){
+Breath_Count++;
+$('#breath_count_area').text(Breath_Count);
+}
+);
+//End debug
  
  $('#right_nav_button').bind('click', function() {
-    var CheckOpacity = $('#right_nav_button').css('opacity');
-    if (CheckOpacity==1){
-    
     $.ajax({
 			url: "set_practice.php",
-			data: "cpr_compressions="+ Compressions + "&cpr_chin="+ Tilt + "&cpr_nose=" + Nose + "&cpr_breaths=" + Breaths,
+			data: "resp_shake="+ shake + "&resp_shout="+ shout + "&ab_chin="+ ab_tilt + "&ab_breathing="+ check + "&ab_telephone=" + call + "&cpr_compressions="+ Compressions + "&cpr_chin="+ Tilt + "&cpr_nose=" + Nose + "&cpr_breaths=" + Breaths,
 			success: function(data){
-                        alert(data);
+                        //alert(test);
                         //Maybe gray out box and change the area to a "success" message
 			}
                 });
     setTimeout(function() {
 	window.location = 'practice_email.htm';
     },500);
-    }
+    
 });
- 
  
  
  
@@ -38,14 +56,22 @@ $(document).ready(function(){
  var seconds=0;
  
  var timeupdate = setInterval(function(){
-        if (minutes>=2) {
+        if (PracticeRun==false){
             return false;
-        $('#right_nav_button').fadeTo('slow', 1);
+        }
+        else {
+        if (minutes>=2) {
+        PracticeRun=false;
+        document.getElementById('siren_sound').load();
+        document.getElementById('siren_sound').play();
+        $('#right_nav_button,#ambulance').show('slow');
+        $('#phone_icon,#keypad,#comp_debug').hide('slow');
+        
         }
     else {
         seconds++
         if (seconds==60) {
-            minutes++
+            minutes++;
             seconds=0;
         }
         if (seconds<10) {
@@ -55,18 +81,312 @@ $(document).ready(function(){
             SecDisplay=seconds;
         }
         $('#seconds_field').text(SecDisplay);
-        $('#minutes_field').text(minutes);    
+        $('#minutes_field').text(minutes+':');    
     }
+        }
     
     
     
  }, 1000);
+ 
+ //resp section
+ var ShakeDone = false;
+var ShoutDone = false;
+var shake=0;
+var shout=0;
+var ShouldRun = true;
+
+//end resp section
+
+//ab section
+var ab_TiltDone = false;
+var CheckDone = false;
+var CallDone = false;
+var ab_tilt = 0;
+var check = 0;
+var call = 0;
+
+$('.tel_button').click(function() {
+    if ($('#lcd').html().length<3){
+	$('#lcd').html($('#lcd').html()+$(this).html());
+    }
+}
+);
+
+$('#clear_button,#td_clear').click(function() {
+	$('#lcd').html("");
+	
+})
+
+$('#send_button,#td_send').click(function() {
+	if ($('#lcd').html() == '999') {
+	call=1;
+	CallDone=true;
+	$('#tel_CheckBox').attr('checked', 'checked');
+	$('#comp_debug,#ab3').fadeTo('slow', 1);
+        $('#phone_icon,#keypad').hide('slow');
+	}
+        else {
+            $('#lcd').html("");
+        }
+	
+	
+})
+
+
+$('#phone_icon').click(function (){
+    $('#keypad').toggle('slow');
+}
+);
+
+
+var TimerRunning = false;
+
+function Start10Sec_Timer()
+  {
+	
+	TimerRunning = true;
+	//setTimeout(alert('TIMER'), 1000);
     
+    setTimeout(function() {
+	check=1;
+	CheckDone=true;
+	$('#check10_CheckBox').attr('checked', 'checked');
+	       
+	       }, 10000);
+    
+ //Pop up telephone
+
+  }
+
+
+//end ab section
+ 
+//cpr sect 
+var CompressionsDone = false;
+var TiltDone = false;
+var NoseDone = false;
+var BreathsDone = false;
+
+var Compressions = 0;
+var Tilt = 0;
+var Nose = 0;
+var Breaths = 0;
+
+var compression_Count = 0;
+var last_Comp_Value = '0';
+
+var Breath_Count = 0;
+var last_Breath_Value = '0';
+//end cpr sect 
+ 
+ var get_all = setInterval(function() {
+
+    if (PracticeRun==false) {
+        return false;
+    }
+    else {
+    $.getJSON('get_all_states.php', function(data) {
+        
+        
+        
+    //resp section
+    if (ShakeDone == false) {	
+    if (data.shake == '1') {
+	$('#ShakeCheckBox').attr('checked', 'checked');
+	shake=1;
+	ShakeDone = true;
+	$('#resp2').show('slow');
+	var isChecked = $('#ShoutCheckBox:checked').val();
+	//alert(isChecked);
+	if (isChecked == undefined)
+	{
+	    	    $('#ShoutCheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+		    ShoutDone=true;
+
+	}
+	
+	//set "Results" 
+    }
+    
+    }
+    
+    if (ShoutDone == false) {
+    if (data.audio == '1') {
+	$('#ShoutCheckBox').attr('checked', 'checked');
+	shout=1;
+	$('#resp1').show('slow');
+	ShoutDone = true;
+    }
+    }
+    
+    //end resp section
+    
+    //start ab section
+    if (data.tilt == '1') {
+	ab_tilt=1;
+    ab_TiltDone=true;
+	var isChecked = $('#ab_chin_CheckBox:checked').val();
+	//alert(isChecked);
+	if (isChecked == undefined)
+	{
+	    	    $('#ab_chin_CheckBox').attr('checked', 'checked');
+	}
+	else {
+		
+		if (TimerRunning == false) {
+		Start10Sec_Timer();
+		}
+		
+		
+	}
+	
+	
+    }
+    
+    //end a_b section
+    
+    //cpr    SECTION
+    
+    var Comp_Check = $('#compressions_CheckBox:checked').val();
+    var Chin_Check = $('#chin_CheckBox:checked').val();
+    var Nose_Check = $('#nose_CheckBox:checked').val();
+    var Breath_Check = $('#breaths_CheckBox:checked').val();
+    
+    
+    if (compression_Count >= 30) {
+    $('#compressions_CheckBox').attr('checked', 'checked');
+    Compressions=1;
+    $('#comp_debug').hide('slow');
+    $('#cpr1').show('slow');
+    }
+    else {
+    if (data.force1 != last_Comp_Value) {
+    compression_Count++;
+    $('#count_area').text(compression_Count);
+    //alert(compression_Count);
+    last_Comp_Value = str(data.force1);
+    }
+    }
+    
+    
+    if (Nose==1) {
+    if (Breath_Count >= 2) {
+    $('#breaths_CheckBox').attr('checked', 'checked');
+    $('#right_nav_button').fadeTo('slow', 1);
+    PracticeRun=false;
+    Breaths=1;
+    $('#cpr4').show('slow');
+    
+    }
+    else {
+    if (data.temp != last_Breath_Value) {
+    Breath_Count++;
+    $('#breath_count_area').text(Breath_Count);
+    //alert(compression_Count);
+    last_Breath_Value = str(data.temp);
+    }
+    }
+    }
+    
+    
+    
+    /*
+	//alert(Chin_is_Checked);
+	 if (Chin_Check == 'on' && Comp_Check == undefined)
+	{
+	    	    $('#compressions_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	}
+        
+        if (Nose_Check == 'on' && Chin_Check == undefined)
+	{
+	    	    $('#chin_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	}
+    */    
+    
+    
+    //Means comp is done
+    if (Compressions==1) {
+    if (data.tilt == '1') {
+    
+	if (Chin_Check == undefined) {
+	    	    $('#chin_CheckBox').attr('checked', 'checked');
+                    Tilt=1;
+                    $('#cpr2').show('slow');
+	}
+    }
+    }
+    
+    if (Tilt==1) {
+    if (data.force2 == '1') {
+        
+        if (Nose_Check == undefined) {
+            $('#nose_CheckBox').attr('checked', 'checked');
+            Nose=1;
+            $('#cpr3').show('slow');
+        }
+    }
+    }
+    
+    
+    // CPR SECTION
+    
+	})}
+}, 1000);
+ 
+
     
 });
       
    </script>
 
+<style>
+
+.actions {
+    display:none;
+}
+
+#time_section {
+    position:absolute;
+    top:75px;
+    left:-5px;
+    background-color:black;
+    color:white;
+    height:150px;
+    width:250px;
+    -webkit-box-shadow: 6px 6px 6px #666;
+    -webkit-border-radius: 5px;
+}
+
+#comp_debug {
+    position:absolute;
+    top:250px;
+    left:-5px;
+    display:none;
+    color:white;
+    background-color:black;
+    height:100px;
+    width:250px;
+    -webkit-box-shadow: 6px 6px 6px #666;
+    -webkit-border-radius: 5px;
+    font-size:20px;
+}
+
+#main_header {
+    position:relative;
+    top:-15px;
+vertical-align:center;
+height:70px;
+width:500px;
+    color:white;
+    background-color:black;
+    -webkit-box-shadow: 6px 6px 6px #666;
+    -webkit-border-radius: 5px;
+    font-size:24px;    
+    
+}
+
+</style>
 
 <title>Practice 2</title>
 
@@ -74,12 +394,87 @@ $(document).ready(function(){
 
 <body>
     <center>
-<h2>Begin First Aid Emergency Actions</h2>
+<p id="main_header" style="vertical-align:center;"><br/>Begin First Aid Emergency Actions</p>
 
-<p id="minutes_field"> </p>
-<p  style="position:relative;left:50px;top:-38px;" id="seconds_field"> </p>
-</span>
-<a href="main_menu.htm" id="left_nav_button">Main</a> <a id="right_nav_button" style="opacity:0;">View Results</a>
+<img src="images/ambulance.jpg" style="display:none;position:absolute;top:50px;" id="ambulance">
+
+
+
+<div id="time_section">
+    <p style="font-size:25px;">Time Elapsed</p>
+<p id="minutes_field" style="font-size:70px;position:absolute;top:0px;left:55px;"> </p>
+<p style="position:relative;left:50px;top:-58px;font-size:70px;" id="seconds_field"> </p>
+</div>
+
+
+    <form>
+<div id="resp1" class="actions"><input type="checkbox" value="shout" id="ShoutCheckBox">Shout in Ears<br/></div>
+<div id="resp2" class="actions"><input type="checkbox" value="shake" id="ShakeCheckBox">Tap Shoulders<br/></div>
+</form>
+
+<form>
+<div id="ab1" class="actions"><input type="checkbox" value="ab_tilt_check" id="ab_chin_CheckBox">Tilt Head<br/></div>
+<div id="ab2" class="actions"><input type="checkbox" value="check10" id="check10_CheckBox">Check for Breathing <br/>(10 sec)<br/></div>
+<div id="ab3" class="actions"><input type="checkbox" value="tel" id="tel_CheckBox">Call 999</div>
+
+</form>
+    
+<br/>
+<img src="images/phone.png" id="phone_icon" width=75 style="position:absolute;right:20px;bottom:70px;">
+<div id="keypad" style="position:absolute;right:50px;top:75px;display:none;">
+
+<table border="0" cellspacing="0px" cellpadding="0px">
+  <tr>
+    <td colspan=3><p id="lcd" style="text-align:right;height:35px;font-size:25px;background-color:#151c26;color:white;"></p> </td>
+  </tr>
+  
+  <tr>
+    
+<td><a class="tel_button">1</a></td>
+<td><a class="tel_button">2</a></td>
+<td><a class="tel_button">3</a></td>
+  </tr>
+<tr>
+<td><a class="tel_button" >4</a></td>
+<td><a class="tel_button" >5</a></td>
+<td><a class="tel_button" >6</a></td>
+  </tr>
+  <tr>
+<td><a class="tel_button" >7</a></td>
+<td><a class="tel_button" >8</a></td>
+<td><a class="tel_button" >9</a></td>	
+  </tr>
+  <tr>
+    <td colspan=2 style="background-color:#21a31a;text-align:center;height:35px;" id="td_send"><a id="send_button" style="background-color:#21a31a;color:white;text-align:center;height:35px;width:100px;" >Call</a></td><td id="td_clear" style="vertical-align:middle;text-align:center;background-color:#151c26;"><center><img src="images/clear.png" style="vertical-align:center;" id="clear_button"></center></td>
+  </tr>
+</table>
+</div>
+
+
+<form>
+<div id="cpr1" class="actions"><input type="checkbox" id="compressions_CheckBox">Compressions (30X)<br/></div>
+<div id="cpr2" class="actions"><input type="checkbox" id="chin_CheckBox">Tilt Head<br/></div>
+<div id="cpr3" class="actions"><input type="checkbox" id="nose_CheckBox">Pinch Nose<br/></div>
+<div id="cpr4" class="actions"><input type="checkbox" id="breaths_CheckBox">Rescue Breaths (2X)</div>
+
+</form>
+
+<div id="comp_debug" >
+<p id="comp_button" >Compression Count:</p>
+<p id="count_area"></p>
+<br/>
+</div>
+<div id ="breath_debug" style="position:absolute;bottom:100px;right:200px;display:none;">
+
+<p id="breath_button">Breath COUNT:</p>
+<p id="breath_count_area"></p>
+</div>
+
+
+
+
+<a href="main_menu.htm" id="left_nav_button">Main</a> <a id="right_nav_button" style="display:none;">View Results</a>
     </center>
+    <audio src="audio/siren.mp4" id="siren_sound" preload autobuffer style="display:none;"></audio>
 </body>
 </html>

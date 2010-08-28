@@ -3,6 +3,8 @@
 <head>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="apple-touch-icon" href="images/logo.png" />
+
     <title>Video</title>
     <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
     
@@ -13,9 +15,11 @@ $(document).ready(function(){
  }
     
         
+        
         $('#BeginButton').click(function(){
             
-		document.getElementById('vid_intro').currentTime = 2.50;
+		document.getElementById('vid_intro').currentTime = 2.35;
+                
                 
                 //$.get("clear.php");
 		setTimeout(function(){
@@ -56,8 +60,9 @@ $(document).ready(function(){
 
 <body ontouchmove="BlockMove(event);" >
 <center>
-<video src="videos/intro.mp4" id="vid_intro" loop autobuffer preload width=650 height=440 ></video>
-<input name="submit" value="Begin" id="BeginButton" class="button" type="submit" style="width:700px;font-size:25px;">
+<video src="videos/welcome.mp4" id="vid_intro" loop autobuffer preload width=1024 height=768 ></video>
+ <input name="submit" value="Begin" id="BeginButton" class="button" type="submit" style="width:900px;height:900px;font-size:25px; position:absolute;top:200px;left:20px;opacity:0;"> 
+    <!-- <a href="main_menu.htm" style="width=500px;height:500px;opacity:0;z-index:100;position:absolute;top:20px;left:20px;"> test</a> -->
 </center>
 
 </body>

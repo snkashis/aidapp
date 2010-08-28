@@ -8,8 +8,19 @@
 document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
 </script>
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+
     <script>
+    
  $(document).ready(function(){
+    var danger_expanded = 0;
+var response_expanded = 1;
+var ab_expanded = 1;
+var cpr_expanded = 1;
+    
+$(':checkbox').bind('click', function() {
+    this.blur();
+  event.preventDefault();
+    });    
     
 $.getJSON('get_all_results.php', function(data) {
 
@@ -23,6 +34,9 @@ if(data.resp_shout=='1'){
 if(data.resp_shake=='1' && data.resp_shout=='1') {
     $('#response_heading').removeClass();
     $('#response_heading').addClass('succeed')
+    $('#response_results').hide();
+    $('#response_arrow').attr('src', 'images/arrow1.png');
+    response_expanded=0;
 }
 
 
@@ -40,6 +54,9 @@ if(data.ab_telephone=='1'){
 if(data.ab_chin=='1' && data.ab_breathing=='1' && data.ab_telephone=='1') {
     $('#ab_heading').removeClass();
     $('#ab_heading').addClass('succeed')
+    $('#ab_results').hide();
+    $('#a_b_arrow').attr('src', 'images/arrow1.png');
+    ab_expanded=0;
     
 }
 
@@ -62,7 +79,10 @@ if(data.cpr_breaths=='1'){
 if(data.cpr_compressions=='1' && data.cpr_chin=='1' && data.cpr_nose=='1' && data.cpr_breaths=='1') {
     $('#cpr_heading').removeClass();
     $('#cpr_heading').addClass('succeed')
-    
+    $('#cpr_results').hide();
+    $('#cpr_arrow').attr('src', 'images/arrow1.png');
+     
+     cpr_expanded=0;
 }
 
 
@@ -70,13 +90,10 @@ if(data.cpr_compressions=='1' && data.cpr_chin=='1' && data.cpr_nose=='1' && dat
 
 });
  
-var danger_expanded = 0;
-var response_expanded = 0;
-var ab_expanded = 0;
-var cpr_expanded = 0;
+
     
 
-$('.results').hide();
+//$('.results').show();
 
 
 
@@ -173,7 +190,7 @@ background:-webkit-gradient(
     display:inline;
     padding-left:150px;
     position:absolute;
-    left:370px;
+    left:425px;
     
 }
 
@@ -196,46 +213,47 @@ Tutorial Results</title>
 </head>
 
 <body>
-<p> Here are the results from your tutorials. After reviewing, you may begin your practice.</p>
+<h2> Here are the results from your tutorials. After reviewing, you may begin your practice.</h2>
 <ul>
-    <li id="danger_heading" class="succeed">Check for Danger <img class="arrows" id="danger_arrow" src="images/arrow1.png" width=20></li>
-    <div id="danger_results" class="results">Danger RESULTS</div>
+    <li id="danger_heading" class="succeed">Check for Danger </li>
+    <!--<div id="danger_results" class="results">Danger RESULTS</div> -->
     
-    <li id ="response_heading" class="failure" >Check for Response <img class="arrows" id="response_arrow" src="images/arrow1.png" width=20></li>
+    <li id ="response_heading" class="failure" >Check for Response <img class="arrows" id="response_arrow" src="images/arrow2.png" width=20></li>
     <div id="response_results" class="results">
         
-        <table>
+        <table width=300>
             <tr>
-            <td style="width:150px;">Shake shoulders</td><td width="100"><input type=checkbox id="resp_shake_Checkbox"></td>
+            <td style="width:150px;">Shout in both ears</td><td width="100"><input type=checkbox id="resp_shout_Checkbox"></td>    
             </tr>
             <tr>
-            <td style="width:150px;">Shout in both ears</td><td width="100"><input type=checkbox id="resp_shout_Checkbox"></td>
+            <td style="width:150px;">Tap shoulders</td><td width="100"><input type=checkbox id="resp_shake_Checkbox"></td>
+            </tr> 
         </table>  
     </div>
     
-    <li id="ab_heading" class="failure">Airway & Breathing <img class="arrows" id="a_b_arrow" src="images/arrow1.png" width=20></li>
+    <li id="ab_heading" class="failure">Airway & Breathing <img class="arrows" id="a_b_arrow" src="images/arrow2.png" width=20></li>
     <div id="ab_results" class="results">
     <table width=300>
     <tr>
-            <td style="width:150px;">Lift Chin</td><td width="100"><input type=checkbox id="ab_chin_Checkbox"></td>
+            <td style="width:150px;">Tilt Head</td><td width="100"><input type=checkbox id="ab_chin_Checkbox"></td>
             </tr>
             <tr>
             <td style="width:150px;">Check for Breathing</td><td width="100"><input type=checkbox id="ab_breathing_Checkbox"></td>
             </tr>
             <tr>
-            <td style="width:150px;">Call 999/112</td><td width="100"><input type=checkbox id="ab_telephone"></td>
+            <td style="width:150px;">Call 999</td><td width="100"><input type=checkbox id="ab_telephone_Checkbox"></td>
             </tr>    
     </table>
     </div>
     
-    <li id ="cpr_heading" class="failure">Learn CPR <img class="arrows" id="cpr_arrow" src="images/arrow1.png" width=20></li>
+    <li id ="cpr_heading" class="failure">Learn CPR <img class="arrows" id="cpr_arrow" src="images/arrow2.png" width=20></li>
     <div id="cpr_results" class="results">
     <table width=300>
             <tr>
             <td style="width:150px;">Compressions(30x)</td><td width="100"><input type=checkbox id="cpr_compressions_Checkbox"></td>
             </tr>
             <tr>
-            <td style="width:150px;">Lift Chin</td><td width="100"><input type=checkbox id="cpr_chin_Checkbox"></td>
+            <td style="width:150px;">Tilt Head</td><td width="100"><input type=checkbox id="cpr_chin_Checkbox"></td>
             </tr>
             <tr>
             <td style="width:150px;">Pinch Nose</td><td width="100"><input type=checkbox id="cpr_nose_Checkbox"></td>
