@@ -181,7 +181,12 @@ body {
 p, a {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
+        font-family:'Futura';
     }
+    
+.tut_x {
+color:red;font-size:55px;margin-left:10px;padding-right:13px;font-weight: bold;
+}
 
     #email_id {
 	padding: 5px;

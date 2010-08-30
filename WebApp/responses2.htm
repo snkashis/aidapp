@@ -12,8 +12,6 @@
     <script>
  $(document).ready(function(){
     
-    
-    
 var ShakeDone = false;
 var ShoutDone = false;
 var shake=0;
@@ -61,15 +59,24 @@ var get_all = setInterval(function() {
     if (data.shake == '1') {
 	$('#ShakeCheckBox').attr('checked', 'checked');
 	shake=1;
+	document.getElementById('vid_responses').pause();
+	//$('#AudioConf').attr('src', 'audio/TapShoulders.mp3');
+	//document.getElementById('AudioConf').play();
+	document.getElementById('TapConf').load();
+	document.getElementById('TapConf').play();
+	
+	var t = setTimeout(function(){
+	document.getElementById('vid_responses').play();    
+	    
+	}, 3000);
 	$('#right_nav_button').fadeTo('slow', 1);
-	//$('#right_nav_button').attr('href', 'airway_breathing1.htm');
 	ShakeDone = true;
 	
 	var isChecked = $('#ShoutCheckBox:checked').val();
 	//alert(isChecked);
 	if (isChecked == undefined)
 	{
-	    	    $('#ShoutCheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	    	    $('#ShoutCheckBox').replaceWith(<a class="tut_x">X</a> ');
 		    ShoutDone=true;
 
 	}
@@ -88,7 +95,13 @@ var get_all = setInterval(function() {
     if (data.audio == '1') {
 	$('#ShoutCheckBox').attr('checked', 'checked');
 	shout=1;
-	
+	document.getElementById('vid_responses').pause();
+	document.getElementById('AudioConf').load();
+document.getElementById('AudioConf').play();
+var t = setTimeout(function(){
+	document.getElementById('vid_responses').play();    
+	    
+	}, 2000);
 	ShoutDone = true;
     }
     }
@@ -109,12 +122,12 @@ var get_all = setInterval(function() {
 <p>Now it's YOUR turn...<b>practice</b> on the doll the steps you have previously learned.</p>
 
 <div id="left">
-<video class="videocss" src="videos/responses2.mp4" loop width=496 height=368 id="vid_responses">
+<video src="videos/responses.mp4" loop width=496 height=368 id="vid_responses">
         </div>
 <div id="right" style="position:absolute;right:35px;top:50px;">
 <form>
-<input type="checkbox" value="shout" class="action_checkbox" id="ShoutCheckBox">Shout in Ears<br/>
-<input type="checkbox" value="shake" class="action_checkbox" id="ShakeCheckBox">Tap Shoulders<br/>
+<input type="checkbox" value="shout" class="action_checkbox" id="ShoutCheckBox">Shout in Ears<br/><br/>
+<input type="checkbox" value="shake" class="action_checkbox" id="ShakeCheckBox">Tap Shoulders
 </form>
 
 </div>
@@ -123,5 +136,7 @@ var get_all = setInterval(function() {
 <br/>
 <a href="responses1.htm" id="left_nav_button">Previous</a>  <a class="button" id="right_nav_button" style="opacity: 0.4;">Next</a>
     </div>
+    <audio src="audio/ShoutEars.mp3" autobuffer preload id="AudioConf" style="display:none;"></audio>
+    <audio src="audio/TapShoulders.mp3" autobuffer preload id="TapConf" style="display:none;"></audio>
 </body>
 </html>

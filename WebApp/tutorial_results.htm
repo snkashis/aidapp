@@ -91,12 +91,6 @@ if(data.cpr_compressions=='1' && data.cpr_chin=='1' && data.cpr_nose=='1' && dat
 });
  
 
-    
-
-//$('.results').show();
-
-
-
 $('#response_heading').click(function() {
     $('#response_results').toggle('slow');
     if (response_expanded==0) {
@@ -140,6 +134,12 @@ $('#cpr_heading').click(function() {
     }
     
  });
+
+var t = setTimeout(function() {
+    if ($('.succeed').length==4) {
+    $('#congrats').show('slow');
+}
+}, 1000);
     
  });
 
@@ -149,16 +149,22 @@ $('#cpr_heading').click(function() {
 
 li {
     width:400px;
-    padding-left:2px;
-    padding-top:10px;
-    padding-bottom:10px;
-    -webkit-border-radius:2px;
+    padding-left:5px;
+    padding-top:7px;
+    padding-bottom:7px;
+    -webkit-border-radius:5px;
 	-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
     list-style:none;
-    font-size:18px;
+    font-size:20px;
     margin-left:auto;
     margin-right:auto;
-    font-family:'Futura';
+    color:white;
+    font-family:'Futura-CondensedExtraBold';
+    letter-spacing:1px;
+    text-shadow: 0px 1px 1px #000;
+    border:solid thin black;
+    margin-top:2px;
+    margin-bottom:2px;
     
 }
 .succeed {
@@ -203,6 +209,22 @@ td {
     font-family:'Futura';
 }
 
+#congrats {
+    position:absolute;
+    top:75px;
+    left:-10px;
+    background-color:black;
+    color:white;
+    height:150px;
+    width:170px;
+    -webkit-box-shadow: 6px 6px 6px #666;
+    -webkit-border-radius: 5px;
+    padding-left:20px;
+    font-size:20px;
+    display:none;
+    
+}
+
 </style>
     
     
@@ -213,7 +235,7 @@ Tutorial Results</title>
 </head>
 
 <body>
-<h2> Here are the results from your tutorials. After reviewing, you may begin your practice.</h2>
+<h3> Here are the results from your tutorials.<br/> After reviewing, you may begin your practice.</h3>
 <ul>
     <li id="danger_heading" class="succeed">Check for Danger </li>
     <!--<div id="danger_results" class="results">Danger RESULTS</div> -->
@@ -268,6 +290,6 @@ Tutorial Results</title>
 </ul>
 
 <a href="main_menu.htm" id="left_nav_button">Main</a> <a href="practice1.htm" id="right_nav_button" >Take Quiz</a>
-
+<div id="congrats"><p><b>Congratulations</b>, you achieved <b>100%</b> on these tutorials</p></div>
 </body>
 </html>

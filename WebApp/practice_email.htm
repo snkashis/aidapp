@@ -156,6 +156,12 @@ $('#cpr_heading').click(function() {
     }
     
  });
+
+var t = setTimeout(function() {
+    if ($('.succeed').length==4) {
+    $('#congratulations').fadeIn('slow');
+}
+}, 500);
     
     
 	$('#SubmitButton').click(function(){
@@ -196,14 +202,17 @@ li {
     padding-left:2px;
     padding-top:5px;
     padding-bottom:5px;
-    -webkit-border-radius:2px;
+    -webkit-border-radius:5px;
 	-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
     list-style:none;
-    font-size:12px;
+    font-size:14px;
     color:white;
     font-family:'Futura-CondensedExtraBold';
     letter-spacing:1px;
     text-shadow: 0px 1px 1px #000;
+    border:solid thin black;
+    margin-top:2px;
+    margin-bottom:2px;
     
 }
 .succeed {
@@ -250,9 +259,14 @@ td {
 
 #congratulations {
     font-family:'Futura-CondensedExtraBold';
-    font-size:32px;
+    font-size:30px;
     letter-spacing:2px;
-    text-shadow: 1px 1px 4px #000;
+    text-shadow: 1px 1px 1px #000;
+    position:absolute;
+    right:65px;
+    top:150px;
+    width:300px;
+    display:none;
     
 }
 
@@ -266,7 +280,7 @@ border: solid thin black;
 position:relative;
 letter-spacing:1.5px;
 left:-4px;
-height:37px;
+height:35px;
 border-radius: 0em .7em .7em 0em;
 -webkit-box-shadow: 2px 2px 3px #999;
 box-shadow: 2px 2px 2px #bbb;
@@ -279,17 +293,17 @@ background-image: -webkit-gradient(linear, left top, left bottom, from(#e9ede8),
 </head>
 <body>
 <div id="main" style="margin-left:80px;">    
-    <p id="congratulations" >Congratulations!</p>
-    <div id="bringup" style="position:relative;bottom:35px;">
+    <div id="congratulations" >Congratulations! You achieved <b>100%</b> on the quiz!</div>
+    <div id="bringup" style="">
 	<div id="email_section">
     <p style="width:600px;font-size:15px;">Enter your email so we can send your results and information about how to get involved in local First Aid organisations.</p>
     <form>
-<input type="email" id="email_id" placeholder="jane@gmail.com" style="font-size:18px;font-family:'Futura';" autocorrect="off" autocapitalize="off">
+<input type="email" id="email_id" placeholder="jane@gmail.com" style="font-size:17px;font-family:'Futura';" autocorrect="off" autocapitalize="off">
 <input id="SubmitButton" type="submit" class="email_button" style="font-size:18px;">
 </form>
 	</div>
-<p style="font-family:'Futura-CondensedExtraBold';">Here are the results from your Practice Quiz:</p>
-<ul style="position:relative;bottom:14px;">
+<p style="font-family:'Futura-CondensedExtraBold';position:relative;bottom:18px;">Here are the results from your Practice Quiz:</p>
+<ul style="position:relative;bottom:18px;">
     <li id="danger_heading" class="succeed">Check for Danger </li>
     <!--<div id="danger_results" class="results">Danger RESULTS</div> -->
     

@@ -28,11 +28,13 @@ $('#count_area').text(compression_Count);
 }
 );
 
+/*
 $('#breath_button').bind('click', function(){
 Breath_Count++;
 $('#breath_count_area').text(Breath_Count);
 }
 );
+*/
 //End debug
  
  $('#right_nav_button').bind('click', function() {
@@ -120,11 +122,14 @@ $('#clear_button,#td_clear').click(function() {
 
 $('#send_button,#td_send').click(function() {
 	if ($('#lcd').html() == '999') {
+        document.getElementById('999_sound').load();
+        document.getElementById('999_sound').play();
 	call=1;
 	CallDone=true;
 	$('#tel_CheckBox').attr('checked', 'checked');
 	$('#comp_debug,#ab3').fadeTo('slow', 1);
         $('#phone_icon,#keypad').hide('slow');
+        
 	}
         else {
             $('#lcd').html("");
@@ -143,21 +148,18 @@ $('#phone_icon').click(function (){
 var TimerRunning = false;
 
 function Start10Sec_Timer()
-  {
-	
-	TimerRunning = true;
-	//setTimeout(alert('TIMER'), 1000);
-    
+    {	
+    TimerRunning = true;
     setTimeout(function() {
-	check=1;
-	CheckDone=true;
+        check=1;
+        CheckDone=true;
 	$('#check10_CheckBox').attr('checked', 'checked');
-	       
-	       }, 10000);
+        $('#ab2').show('slow');
+    }, 10000);
     
  //Pop up telephone
 
-  }
+    }
 
 
 //end ab section
@@ -198,7 +200,7 @@ var last_Breath_Value = '0';
 	ShakeDone = true;
 	$('#resp2').show('slow');
 	var isChecked = $('#ShoutCheckBox:checked').val();
-	//alert(isChecked);
+	
 	if (isChecked == undefined)
 	{
 	    	    $('#ShoutCheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
@@ -206,7 +208,7 @@ var last_Breath_Value = '0';
 
 	}
 	
-	//set "Results" 
+	
     }
     
     }
@@ -231,18 +233,33 @@ var last_Breath_Value = '0';
 	if (isChecked == undefined)
 	{
 	    	    $('#ab_chin_CheckBox').attr('checked', 'checked');
+                    $('#ab1').show('slow');
 	}
 	else {
-		
-		if (TimerRunning == false) {
-		Start10Sec_Timer();
-		}
-		
+		if (CheckDone==false){
+                    if (TimerRunning == false) {
+                        Start10Sec_Timer();
+                    }
+                }
 		
 	}
 	
 	
     }
+    
+    else if (data.tilt == '0') {
+        if(CheckDone==false) {
+	if(TimerRunning == true) {
+            TimerRunning=false;
+            CheckDone=true;
+            $('#check10_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+            $('#ab2').show('slow');
+            
+	}
+        }
+	
+    }
+    
     
     //end a_b section
     
@@ -252,6 +269,8 @@ var last_Breath_Value = '0';
     var Chin_Check = $('#chin_CheckBox:checked').val();
     var Nose_Check = $('#nose_CheckBox:checked').val();
     var Breath_Check = $('#breaths_CheckBox:checked').val();
+    
+    
     
     
     if (compression_Count >= 30) {
@@ -271,22 +290,21 @@ var last_Breath_Value = '0';
     
     
     if (Nose==1) {
-    if (Breath_Count >= 2) {
-    $('#breaths_CheckBox').attr('checked', 'checked');
-    $('#right_nav_button').fadeTo('slow', 1);
-    PracticeRun=false;
-    Breaths=1;
-    $('#cpr4').show('slow');
+        if (Breath_Count >= 2) {
+            $('#breaths_CheckBox').attr('checked', 'checked');
+            $('#right_nav_button').fadeTo('slow', 1);
+            PracticeRun=false;
+            Breaths=1;
+            $('#cpr4').show('slow');
     
-    }
-    else {
-    if (data.temp != last_Breath_Value) {
-    Breath_Count++;
-    $('#breath_count_area').text(Breath_Count);
-    //alert(compression_Count);
-    last_Breath_Value = str(data.temp);
-    }
-    }
+        }   
+        else {
+            if (data.temp != last_Breath_Value) {
+                Breath_Count++;
+                $('#breath_count_area').text(Breath_Count);
+                last_Breath_Value = str(data.temp);
+                }
+        }
     }
     
     
@@ -396,7 +414,7 @@ width:500px;
     <center>
 <p id="main_header" style="vertical-align:center;"><br/>Begin First Aid Emergency Actions</p>
 
-<img src="images/ambulance.jpg" style="display:none;position:absolute;top:50px;" id="ambulance">
+<img src="images/ambulance.jpg" style="display:none;position:absolute;top:50px;z-index:-100;" id="ambulance">
 
 
 
@@ -476,5 +494,6 @@ width:500px;
 <a href="main_menu.htm" id="left_nav_button">Main</a> <a id="right_nav_button" style="display:none;">View Results</a>
     </center>
     <audio src="audio/siren.mp4" id="siren_sound" preload autobuffer style="display:none;"></audio>
+    <audio src="audio/999.mp3" id="999_sound" preload autobuffer style="display:none;"></audio>
 </body>
 </html>

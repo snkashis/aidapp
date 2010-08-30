@@ -8,7 +8,6 @@
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <title>CPR 2</title>
 
-
 <script>
 $(document).ready(function(){
     
@@ -31,8 +30,7 @@ $('#right_nav_button').bind('click', function() {
 			url: "set_responses.php",
 			data: "cpr_compressions="+ Compressions + "&cpr_chin="+ Tilt + "&cpr_nose=" + Nose + "&cpr_breaths=" + Breaths,
 			success: function(data){
-                        //alert(data);
-                        //Maybe gray out box and change the area to a "success" message
+                        
 			}
                 });
     setTimeout(function() {
@@ -55,15 +53,41 @@ $('#count_area').text(compression_Count);
 }
 );
 
+/*
 $('#breath_button').bind('click', function(){
 Breath_Count++;
 $('#breath_count_area').text(Breath_Count);
 }
 );
+*/
 //End debug
 
 document.getElementById('vid_cpr').load();
 document.getElementById('vid_cpr').play();
+
+
+var TimerRunning = false;
+
+function Start60SecTimer()
+  {
+	
+	TimerRunning = true;
+    
+    setTimeout(function() {
+	if (TimerRunning==true) {
+            BreathsDone=true;
+            $('#breath_debug').hide('slow');
+            $('#breaths_CheckBox').replaceWith('<a class="tut_x">X</a> ');
+            if (CompressionsDone==false) {
+            $('#compressions_CheckBox').replaceWith('<a class="tut_x">X</a> ');
+            }
+            $('#right_nav_button').fadeTo('slow', 1);
+	
+	}
+	       }, 60000);
+    
+
+  }
 
 var compression_Count = 0;
 var last_Comp_Value = '0';
@@ -81,34 +105,61 @@ var get_all = setInterval(function() {
     var Nose_Check = $('#nose_CheckBox:checked').val();
     var Breath_Check = $('#breaths_CheckBox:checked').val();
     
+    if (CompressionsDone==false) {
     
-    if (compression_Count >= 30) {
-    $('#compressions_CheckBox').attr('checked', 'checked');
-    Compressions=1;
+        if (compression_Count >= 30) {
+            $('#compressions_CheckBox').attr('checked', 'checked');
+            Compressions=1;
+            CompressionsDone=true;
+            $('#comp_debug').hide('slow');
+            document.getElementById('vid_cpr').pause();
+	
+            document.getElementById('CompConf').load();
+            document.getElementById('CompConf').play();
+	
+            var t = setTimeout(function(){
+            document.getElementById('vid_cpr').play();    
+	    
+            }, 3000);
+        }
+        else {
+            if (data.force1 != last_Comp_Value) {
+            compression_Count++;
+            $('#count_area').text(compression_Count);
+            last_Comp_Value = str(data.force1);
+            }
+        }
     }
-    else {
-    if (data.force1 != last_Comp_Value) {
-    compression_Count++;
-    $('#count_area').text(compression_Count);
-    //alert(compression_Count);
-    last_Comp_Value = str(data.force1);
-    }
-    }
+    //
+    
+    if (BreathsDone==false) {
     
     if (Breath_Count >= 2) {
     $('#breaths_CheckBox').attr('checked', 'checked');
     $('#right_nav_button').fadeTo('slow', 1);
     Breaths=1;
+    BreathsDone=true;
+    $('#breath_debug').hide('slow');
+    TimerRunning=false;
+    document.getElementById('vid_cpr').pause();
+	
+	document.getElementById('BreathConf').load();
+	document.getElementById('BreathConf').play();
+	
+	var t = setTimeout(function(){
+	document.getElementById('vid_cpr').play();    
+	    
+	}, 3000);
     }
     else {
     if (data.temp != last_Breath_Value) {
     Breath_Count++;
     $('#breath_count_area').text(Breath_Count);
-    //alert(compression_Count);
+    
     last_Breath_Value = str(data.temp);
     }
     }
-    
+    }
     
     
     
@@ -116,12 +167,12 @@ var get_all = setInterval(function() {
 	//alert(Chin_is_Checked);
 	 if (Chin_Check == 'on' && Comp_Check == undefined)
 	{
-	    	    $('#compressions_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	    	    $('#compressions_CheckBox').replaceWith('<a class="tut_x">X</a> ');
 	}
         
         if (Nose_Check == 'on' && Chin_Check == undefined)
 	{
-	    	    $('#chin_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
+	    	    $('#chin_CheckBox').replaceWith('<a class="tut_x">X</a> ');
 	}
         
     
@@ -130,6 +181,15 @@ var get_all = setInterval(function() {
 	if (Chin_Check == undefined) {
 	    	    $('#chin_CheckBox').attr('checked', 'checked');
                     Tilt=1;
+                    document.getElementById('vid_cpr').pause();
+	
+	document.getElementById('TiltConf').load();
+	document.getElementById('TiltConf').play();
+	
+	var t = setTimeout(function(){
+	document.getElementById('vid_cpr').play();    
+	    
+	}, 3000);
 	}
     }
 
@@ -138,6 +198,16 @@ var get_all = setInterval(function() {
         if (Nose_Check == undefined) {
             $('#nose_CheckBox').attr('checked', 'checked');
             Nose=1;
+            Start60SecTimer();
+            document.getElementById('vid_cpr').pause();
+	
+	document.getElementById('PinchConf').load();
+	document.getElementById('PinchConf').play();
+	
+	var t = setTimeout(function(){
+	document.getElementById('vid_cpr').play();    
+	    
+	}, 3000);
         }
     }
     
@@ -157,7 +227,7 @@ var get_all = setInterval(function() {
     <div id="main">
         <p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
         <div id="left">
-<video class="videocss" src="videos/cpr2.mp4" loop width=450 height=368 id="vid_cpr">
+<video src="videos/cpr2.mp4" loop width=450 height=368 id="vid_cpr">
         </div>
     <div id="right" style="position:absolute;right:10px;top:50px;">
 
@@ -168,19 +238,23 @@ var get_all = setInterval(function() {
 <input type="checkbox" class="action_checkbox" id="breaths_CheckBox">Rescue Breaths (2X)
 
 </form>
-<div id="comp_debug" style="position:relative;top:-285px;left:160px;">
-<a id="comp_button" style="font-size:18px;font-family:'Futura';">Count:</a>
+<div id="comp_debug" style="position:absolute;top:60px;left:160px;">
+<a id="comp_button" style="font-size:18px;">Count:</a>
 <p id="count_area" style="font-size:18px;display:inline;"></p>
 <br/>
 </div>
-<div id="breath_debug" style="display:none;"
-<p id="breath_button">Breath Count:</p>
-<p id="breath_count_area" style="font-size:18px;"></p>
+<div id="breath_debug" style="position:absolute;top:350px;left:160px;">
+<a id="breath_button" style="font-size:18px;">Count:</a>
+<p id="breath_count_area" style="font-size:18px;display:inline;"></p>
     </div>
     </div>
     
 <a href="cpr1.htm" id="left_nav_button">Previous</a>  <a id="right_nav_button" style="opacity: 0.4;">Done</a>
     </div>
     </div>
+    <audio src="audio/Compression.mp3" autobuffer preload id="CompConf" style="display:none;"></audio>
+    <audio src="audio/TiltHead.mp3" autobuffer preload id="TiltConf" style="display:none;"></audio>
+    <audio src="audio/PinchNose.mp3" autobuffer preload id="PinchConf" style="display:none;"></audio>
+    <audio src="audio/RescueBreath.mp3" autobuffer preload id="BreathConf" style="display:none;"></audio>
 </body>
 </html>
