@@ -199,13 +199,13 @@ var t = setTimeout(function() {
 
 li {
     width:250px;
-    padding-left:2px;
+    padding-left:5px;
     padding-top:5px;
     padding-bottom:5px;
     -webkit-border-radius:5px;
-	-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
+    -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
     list-style:none;
-    font-size:14px;
+    font-size:20px;
     color:white;
     font-family:'Futura-CondensedExtraBold';
     letter-spacing:1px;
@@ -241,9 +241,9 @@ background:-webkit-gradient(
 
 .arrows {
     display:inline;
-    padding-left:-5px;
+    padding-top:5px;
     position:absolute;
-    left:250px;
+    left:310px;
     
 }
 
@@ -254,17 +254,16 @@ background:-webkit-gradient(
 
 td {
     font-family:'Futura';
-    font-size:12px;
+    font-size:14px;
 }
 
 #congratulations {
     font-family:'Futura-CondensedExtraBold';
     font-size:30px;
     letter-spacing:2px;
-    text-shadow: 1px 1px 1px #000;
     position:absolute;
     right:65px;
-    top:150px;
+    top:75px;
     width:300px;
     display:none;
     
@@ -288,22 +287,28 @@ background-color: #ce401c;
 background-image: -webkit-gradient(linear, left top, left bottom, from(#e9ede8), to(#3333FF),color-stop(0.4, #3399FF));
 }
 
+#email_section {
+    position:absolute;
+    right:32px;
+    top:250px;
+    width:370px;
+    background-color:#e0e0e0;
+    -webkit-border-radius: 10px;
+    padding:5px;
+    border:solid thin black;
+    -webkit-box-shadow:2 2px 2px rgba(0,0,0,0.3);
+    
+}
+
 </style>
     
 </head>
 <body>
-<div id="main" style="margin-left:80px;">    
+<div id="main" style="margin-left:35px;">    
     <div id="congratulations" >Congratulations! You achieved <b>100%</b> on the quiz!</div>
-    <div id="bringup" style="">
-	<div id="email_section">
-    <p style="width:600px;font-size:15px;">Enter your email so we can send your results and information about how to get involved in local First Aid organisations.</p>
-    <form>
-<input type="email" id="email_id" placeholder="jane@gmail.com" style="font-size:17px;font-family:'Futura';" autocorrect="off" autocapitalize="off">
-<input id="SubmitButton" type="submit" class="email_button" style="font-size:18px;">
-</form>
-	</div>
-<p style="font-family:'Futura-CondensedExtraBold';position:relative;bottom:18px;">Here are the results from your Practice Quiz:</p>
-<ul style="position:relative;bottom:18px;">
+	
+<p style="font-family:'Futura-CondensedExtraBold';">Here are the results from your Practice Quiz:</p>
+<ul>
     <li id="danger_heading" class="succeed">Check for Danger </li>
     <!--<div id="danger_results" class="results">Danger RESULTS</div> -->
     
@@ -358,7 +363,13 @@ background-image: -webkit-gradient(linear, left top, left bottom, from(#e9ede8),
     </div>
 </div>
 
-
+<div id="email_section">
+    <p style="font-size:17px;">Enter your email so we can send your results and information about how to get involved in local First Aid organisations.</p>
+    <form>
+<input type="email" id="email_id" placeholder="jane@gmail.com" style="font-size:17px;font-family:'Futura';" autocorrect="off" autocapitalize="off">
+<input id="SubmitButton" type="submit" class="email_button" style="font-size:18px;">
+</form>
+	</div>
 <a href="main_menu.htm" id="left_nav_button">Main</a><a id="right_nav_button">Quit</a>    
 </body>
 </html>

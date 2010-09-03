@@ -4,7 +4,9 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<link rel="stylesheet" type="text/css" href="style.css">
-
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
+</script>
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <title>Airway and Breathing 2</title>
 
@@ -42,9 +44,25 @@ $('#send_button,#td_send').click(function() {
         $('#phone_icon,#keypad').hide('slow');
 	$('#right_nav_button').fadeTo('slow', 1);
 	document.getElementById('vid_a_b').pause();
-	
-	document.getElementById('CallConf').load();
 	document.getElementById('CallConf').play();
+	
+	
+	
+	if ($('#chin_CheckBox:checked').val() == undefined)
+	{
+	    	    $('#chin_CheckBox').replaceWith('<a class="tut_x">X</a> ');
+		    TiltDone=true;
+
+	}
+	
+	if ($('#check10_CheckBox:checked').val() == undefined)
+	{
+	    	    $('#check10_CheckBox').replaceWith('<a class="tut_x">X</a> ');
+		    CheckDone=true;
+
+	}
+	
+	
 	
 	var t = setTimeout(function(){
 	document.getElementById('vid_a_b').play();    
@@ -108,7 +126,7 @@ function Start10Sec_Timer()
 	
 	document.getElementById('CheckConf').load();
 	document.getElementById('CheckConf').play();
-	
+	TimerRunning=false;
 	var t = setTimeout(function(){
 	document.getElementById('vid_a_b').play();    
 	    
@@ -154,7 +172,7 @@ var get_all = setInterval(function() {
 	}
 	else {
 		
-		if (TimerRunning == false) {
+		if (TimerRunning == false && CheckDone==false) {
 		Start10Sec_Timer();
 		}
 		
@@ -171,43 +189,41 @@ var get_all = setInterval(function() {
     else if (data.tilt == '0') {
 	if(TimerRunning == true) {
 	TimerRunning=false;
-	$('#check10_CheckBox').replaceWith(<a class="tut_x">X</a> ');
+	$('#check10_CheckBox').replaceWith('<a class="tut_x">X</a> ');
 	CheckDone=true;
 	}
 	
     }
 	})}
     
-}, 1000);
+}, 750);
 
 
  
 });
 </script>
-<script type="application/x-javascript">
-document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
-</script>
+
 
 </head>
 
 <body>
     <div id="main">
-        <p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
+        <p id="tut_text">Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
         <div id="left">
-<video src="videos/a_b.mp4" loop width=450 height=368 id="vid_a_b">
+<video src="videos/a_b.mp4" loop width=450 height=335 id="vid_a_b" class="vid_demos">
         </div>
-    <div id="right" style="position:absolute;right:15px;top:50px;">
+    <div id="right" style="position:absolute;right:10px;top:50px;">
 
 <form>
 <input type="checkbox" value="tilt" class="action_checkbox" id="chin_CheckBox">Tilt Head<br/>
-<input type="checkbox" value="check10" class="action_checkbox" id="check10_CheckBox">Check for Breathing <br/>(10 sec)<br/>
+<input type="checkbox" value="check10" class="action_checkbox" id="check10_CheckBox">Check for Breathing <br/><span style="position:relative;right:-160px;">(10 sec)</span><br/>
 
 <input type="checkbox" value="tel" class="action_checkbox" id="tel_CheckBox">Call 999
 
 </form>
     </div>
 <br/>
-<img src="images/phone.png" id="phone_icon" width=75 style="position:absolute;right:225px;top:250px;">
+<img src="images/phone.png" id="phone_icon" width=75 style="position:absolute;right:225px;top:275px;">
 <div id="keypad" style="position:absolute;right:50px;top:275px;display:none;">
 
 <table border="0" cellspacing="0px" cellpadding="0px">

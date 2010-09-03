@@ -19,26 +19,26 @@ document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
 $(document).ready(function(){
 document.getElementById('vid_intro').load();
 document.getElementById('vid_intro').play();
-
-setTimeout(function() {
-    window.location = "main_menu.htm";
-}
-    , 16000);
-
-
-
-
 });
 
 </script>
+
+<script type="text/javascript">
+
+       function GoTo() {
+          window.location = "main_menu.htm";
+        }
+  </script>
+
+
 </head>
 
 <body>
 <center>
-<video src="videos/meet_andy.mov" id="vid_intro"  autobuffer preload width=1024 height=768></video>
+<video src="videos/meet_andy.mov" id="vid_intro"  autobuffer preload width=1024 height=768 style="position:absolute;top:-20px;" onended="GoTo();"></video>
 
 </center>
-<a href="main_menu.htm" style="position:absolute;bottom:-125px;right:-100px;font-size:20px;font-family:'Futura';color:black;">Skip</a>
+<a href="main_menu.htm" style="position:absolute;bottom:-125px;right:-200px;font-size:24px;font-family:'Futura';color:black;">Skip</a>
 
 </body>
 </html>

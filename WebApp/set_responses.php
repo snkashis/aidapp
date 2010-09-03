@@ -2,6 +2,8 @@
   
     include ("config.php");    
     
+    $did_danger = $_GET['danger'];
+    
     $did_resp_shake = $_GET['resp_shake'];
     $did_resp_shout = $_GET['resp_shout'];
     
@@ -15,6 +17,8 @@
     $did_cpr_breaths = $_GET['cpr_nose'];
     //
     
+    $set_danger = "UPDATE Results SET danger='1'";
+    
     $set_resp_shake = "UPDATE Results SET resp_shake='1'";
     $set_resp_shout = "UPDATE Results SET resp_shout='1'";
     
@@ -26,6 +30,12 @@
     $set_cpr_chin = "UPDATE Results SET cpr_chin='1'";
     $set_cpr_nose = "UPDATE Results SET cpr_nose='1'";
     $set_cpr_breaths = "UPDATE Results SET cpr_breaths='1'";
+  
+    if ($did_danger=='1'){
+    mysql_query($set_danger) or die(mysql_error());
+    
+    echo 'SUCCESS, danger is now 1';
+    }
   
     if ($did_resp_shake=='1'){
     mysql_query($set_resp_shake) or die(mysql_error());

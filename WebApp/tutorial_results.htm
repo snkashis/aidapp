@@ -23,6 +23,11 @@ $(':checkbox').bind('click', function() {
     });    
     
 $.getJSON('get_all_results.php', function(data) {
+    
+if(data.danger=='1') {
+    $('#danger_heading').removeClass();
+    $('#danger_heading').addClass('succeed')
+}    
 
 if(data.resp_shake=='1'){
     $('#resp_shake_Checkbox').attr('checked', 'checked');
@@ -150,12 +155,12 @@ var t = setTimeout(function() {
 li {
     width:400px;
     padding-left:5px;
-    padding-top:7px;
-    padding-bottom:7px;
+    padding-top:6px;
+    padding-bottom:6px;
     -webkit-border-radius:5px;
 	-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
     list-style:none;
-    font-size:20px;
+    font-size:22px;
     margin-left:auto;
     margin-right:auto;
     color:white;
@@ -194,9 +199,9 @@ background:-webkit-gradient(
 
 .arrows {
     display:inline;
-    padding-left:150px;
+    padding-top:5px;
     position:absolute;
-    left:425px;
+    left:555px;
     
 }
 
@@ -206,7 +211,8 @@ background:-webkit-gradient(
 }
 
 td {
-    font-family:'Futura';
+    font-size:17px;
+    
 }
 
 #congrats {
@@ -229,15 +235,14 @@ td {
     
     
     
-<title>
-Tutorial Results</title>
+<title>Tutorial Results</title>
 
 </head>
 
 <body>
-<h3> Here are the results from your tutorials.<br/> After reviewing, you may begin your practice.</h3>
+<h3> Here are the results from your tutorials.   Review, then begin quiz.</h3>
 <ul>
-    <li id="danger_heading" class="succeed">Check for Danger </li>
+    <li id="danger_heading" class="failure">Check for Danger </li>
     <!--<div id="danger_results" class="results">Danger RESULTS</div> -->
     
     <li id ="response_heading" class="failure" >Check for Response <img class="arrows" id="response_arrow" src="images/arrow2.png" width=20></li>
@@ -272,7 +277,7 @@ Tutorial Results</title>
     <div id="cpr_results" class="results">
     <table width=300>
             <tr>
-            <td style="width:150px;">Compressions(30x)</td><td width="100"><input type=checkbox id="cpr_compressions_Checkbox"></td>
+            <td style="width:150px;">Compressions (30x)</td><td width="100"><input type=checkbox id="cpr_compressions_Checkbox"></td>
             </tr>
             <tr>
             <td style="width:150px;">Tilt Head</td><td width="100"><input type=checkbox id="cpr_chin_Checkbox"></td>
@@ -290,6 +295,5 @@ Tutorial Results</title>
 </ul>
 
 <a href="main_menu.htm" id="left_nav_button">Main</a> <a href="practice1.htm" id="right_nav_button" >Take Quiz</a>
-<div id="congrats"><p><b>Congratulations</b>, you achieved <b>100%</b> on these tutorials</p></div>
 </body>
 </html>

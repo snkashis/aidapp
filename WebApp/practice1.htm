@@ -4,15 +4,24 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="user-scalable=no, width=device-width" />
     <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="application/x-javascript">
 document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
 </script>
+
+<script>
+$(document).ready(function(){
+document.getElementById('vid_practice').load();
+document.getElementById('vid_practice').play();
+});
+</script>
+
 
 <script type="text/javascript">
 
        // listener function changes src
        function GoTo() {
-          window.location = "practice2.htm";
+          $('#right_nav_button').show('slow');
         }
        // function adds listener function to ended event -->
         function myAddListener(){
@@ -29,12 +38,10 @@ document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
 <body onload="myAddListener()">
     <center>
 <h2>Ready to test your skills in a real scenario?</h2>
+<video src="videos/practice1.mp4" id="vid_practice" autobuffer preload controls width=720 height=400 style="position:relative;top:-15px;"></video>
 
-<h3> Take a deep breath and press play.</h3>
-<video src="videos/practice1.mp4" id="vid_practice" autobuffer preload controls width=550 height=350></video>
-</br></br></br>
 
-<a href="main_menu.htm" id="left_nav_button">Main</a> <a href="responses2.htm" id="right_nav_button" style="opacity:0;">Start</a>
+<a href="main_menu.htm" id="left_nav_button">Main</a> <a href="practice2.htm" id="right_nav_button" style="display:none;">Start</a>
     </center>
 </body>
 </html>

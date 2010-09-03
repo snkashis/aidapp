@@ -21,7 +21,6 @@ var ShouldRun = true;
 document.getElementById('vid_responses').load();
 document.getElementById('vid_responses').play();
 
-//trying to remove the ability to click checkboxs
 $(':checkbox').bind('click', function() {
     this.blur();
   event.preventDefault();
@@ -60,8 +59,6 @@ var get_all = setInterval(function() {
 	$('#ShakeCheckBox').attr('checked', 'checked');
 	shake=1;
 	document.getElementById('vid_responses').pause();
-	//$('#AudioConf').attr('src', 'audio/TapShoulders.mp3');
-	//document.getElementById('AudioConf').play();
 	document.getElementById('TapConf').load();
 	document.getElementById('TapConf').play();
 	
@@ -73,15 +70,14 @@ var get_all = setInterval(function() {
 	ShakeDone = true;
 	
 	var isChecked = $('#ShoutCheckBox:checked').val();
-	//alert(isChecked);
+	
 	if (isChecked == undefined)
 	{
-	    	    $('#ShoutCheckBox').replaceWith(<a class="tut_x">X</a> ');
+	    	    $('#ShoutCheckBox').replaceWith('<a class="tut_x">X</a> ');
 		    ShoutDone=true;
 
 	}
 	
-	//set "Results" 
 	
 	
 	
@@ -108,7 +104,7 @@ var t = setTimeout(function(){
     
 	})
     }
-    }, 1000);
+    }, 750);
 
  
 });
@@ -119,10 +115,10 @@ var t = setTimeout(function(){
 
 <body>
     <div id="main">
-<p>Now it's YOUR turn...<b>practice</b> on the doll the steps you have previously learned.</p>
+<p id="tut_text">Now it's YOUR turn...<b>practice</b> on the doll the steps you just learned.</p>
 
 <div id="left">
-<video src="videos/responses.mp4" loop width=496 height=368 id="vid_responses">
+<video src="videos/responses.mp4" class="vid_demos" loop width=496 height=368 id="vid_responses">
         </div>
 <div id="right" style="position:absolute;right:35px;top:50px;">
 <form>

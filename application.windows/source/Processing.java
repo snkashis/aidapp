@@ -99,7 +99,7 @@ public void serialEvent(Serial myPort) {
     println("SHAKE VAL is " + e);
     println("SHAKE VAL is " + f);
     // CONVERT TO STATES
-    if (a < 180) {
+    if (a < 200) {
     conv_Tilt = 1;
     }
     else
@@ -122,7 +122,7 @@ public void serialEvent(Serial myPort) {
     conv_Force2 = 0;
     }
     
-    if (d >= 0.77f) {
+    if (d >= 0.79f) {
       conv_Temp = 1;
     }
     else {

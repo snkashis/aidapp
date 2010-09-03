@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="application/x-javascript">
+document.addEventListener("touchmove", function(e){e.preventDefault();}, false); 
+</script>
 <title>CPR 2</title>
 
 <script>
@@ -47,13 +50,14 @@ $(':checkbox').bind('click', function() {
     });
 
 //DEBUG Below
+/*
 $('#comp_button').bind('click', function(){
 compression_Count++;
 $('#count_area').text(compression_Count);
 }
 );
 
-/*
+
 $('#breath_button').bind('click', function(){
 Breath_Count++;
 $('#breath_count_area').text(Breath_Count);
@@ -112,6 +116,7 @@ var get_all = setInterval(function() {
             Compressions=1;
             CompressionsDone=true;
             $('#comp_debug').hide('slow');
+            
             document.getElementById('vid_cpr').pause();
 	
             document.getElementById('CompConf').load();
@@ -120,10 +125,12 @@ var get_all = setInterval(function() {
             var t = setTimeout(function(){
             document.getElementById('vid_cpr').play();    
 	    
-            }, 3000);
+            }, 4000);
         }
         else {
-            if (data.force1 != last_Comp_Value) {
+            
+            if (data.force1=='1') {
+            // old routine // if (data.force1 != last_Comp_Value) {
             compression_Count++;
             $('#count_area').text(compression_Count);
             last_Comp_Value = str(data.force1);
@@ -162,9 +169,6 @@ var get_all = setInterval(function() {
     }
     
     
-    
-    
-	//alert(Chin_is_Checked);
 	 if (Chin_Check == 'on' && Comp_Check == undefined)
 	{
 	    	    $('#compressions_CheckBox').replaceWith('<a class="tut_x">X</a> ');
@@ -199,6 +203,10 @@ var get_all = setInterval(function() {
             $('#nose_CheckBox').attr('checked', 'checked');
             Nose=1;
             Start60SecTimer();
+            if(CompressionsDone==false) {
+            $('#compressions_CheckBox').replaceWith('<a class="tut_x">X</a> ');
+            CompressionsDone=true;    
+            }
             document.getElementById('vid_cpr').pause();
 	
 	document.getElementById('PinchConf').load();
@@ -213,7 +221,7 @@ var get_all = setInterval(function() {
     
     
 	})
-}, 1250);
+}, 750);
 
 
 
@@ -225,9 +233,9 @@ var get_all = setInterval(function() {
 
 <body>
     <div id="main">
-        <p>Now it's YOUR turn, <b>practice</b> on the doll the steps you have previously learned.</p>
-        <div id="left">
-<video src="videos/cpr2.mp4" loop width=450 height=368 id="vid_cpr">
+        <p id="tut_text">Now it's YOUR turn, <b>practice</b> on the doll the steps you have just learned.</p>
+        <div id="left" style="position:absolute;left:0px;top:60px;">
+            <video src="videos/cpr2.mp4" loop width=450 height=335 id="vid_cpr" class="vid_demos">
         </div>
     <div id="right" style="position:absolute;right:10px;top:50px;">
 
@@ -250,7 +258,7 @@ var get_all = setInterval(function() {
     </div>
     
 <a href="cpr1.htm" id="left_nav_button">Previous</a>  <a id="right_nav_button" style="opacity: 0.4;">Done</a>
-    </div>
+    
     </div>
     <audio src="audio/Compression.mp3" autobuffer preload id="CompConf" style="display:none;"></audio>
     <audio src="audio/TiltHead.mp3" autobuffer preload id="TiltConf" style="display:none;"></audio>

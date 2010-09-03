@@ -4,12 +4,26 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="user-scalable=no, width=device-width" />
     <link rel="stylesheet" type="text/css" href="style.css">
-
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="application/x-javascript">
 document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
 function GoTo() {
-    window.location = "responses1.htm";
+ var danger_var = 1;   
+    $.ajax({
+			url: "set_responses.php",
+			data: "danger="+ danger_var,
+			success: function(data){
+                        
+			}
+                });
+    setTimeout(function() {
+	window.location = 'responses1.htm';
+    },1000);
 }
+
+
+
+
 
 function VideoPlay() {        
 document.getElementById('danger_intro').load();
@@ -25,7 +39,7 @@ document.getElementById('danger_intro').play();
 <center>
 <p class="description">Watch video below about <b>checking for danger:</b></p>
 
-<video src="videos/danger_demo.mp4" id="danger_intro" autobuffer preload controls width=600 height=350 onended="GoTo();"></video>
+<video src="videos/danger_demo.mp4" id="danger_intro" autobuffer preload controls width=630 height=350 onended="GoTo();" style="border:15px solid black;-webkit-border-radius:15px;"></video>
 <br><br><br><br>
 
 <a href="tutorial_menu.htm" id="left_nav_button">Previous</a> <img id="Image-Maps_2201008271220522" src="images/progress1.png" usemap="#Image-Maps_2201008271220522" class="progress_bar" border="0" width="360" height="55" alt="" />

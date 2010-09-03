@@ -4,6 +4,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="user-scalable=no, width=device-width" />
     <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="application/x-javascript">
 document.addEventListener("touchmove", function(e){e.preventDefault();}, false);
 function GoTo() {
@@ -21,9 +22,9 @@ document.getElementById('vid_intro').play();
 
 <body onload="VideoPlay();">
     <center>
-<p class="description" >Watch a video below about <b>checking for response:</b></p>
+<p class="description" >Watch video below about <b>checking for response:</b></p>
 
-<video src="videos/response_demo.mp4" id="vid_intro" autobuffer preload controls width=600 height=350 onended="GoTo();"></video>
+<video src="videos/response_demo.mp4" id="vid_intro" autobuffer preload controls width=630 height=350 onended="GoTo();" style="border:15px solid black;-webkit-border-radius:15px;"></video>
 </br></br></br></br>
 
 <a href="danger.htm" id="left_nav_button">Previous</a> <img id="Image-Maps_2201008271220522" src="images/progress2.png" class="progress_bar"  usemap="#Image-Maps_2201008271220522" border="0" width="360" height="55" alt="" />
