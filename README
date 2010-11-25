@@ -1,1 +1,9 @@
-Also uses Florian Jenett's awesome <a href="http://bezier.de/processing/libs/sql/">SQLibrary</a> plugin for Processing.
+This system uses a bank of sensors via Arduino to transmit signals to the web app which provides for an interactive First Aid CPR training experience.
+
+Uses jQuery, PHP, MySQL, Processing, and JSON.
+We installed Piezo , temperature, pressure, and microphone sensors in a CPR dummy to detect the range of different stimuli.
+
+Also uses Florian Jenett's awesome SQLibrary plugin for Processing.
+http://bezier.de/processing/libs/sql/
+
+Binaries are in the application.* folders.
