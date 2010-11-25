@@ -1,4 +1,4 @@
-This system uses a bank of sensors via Arduino to transmit signals to the web app which provides for an interactive First Aid CPR training experience.
+This system uses a bank of sensors via an Arduino to transmit signals to a web app which provides for an interactive First Aid CPR training experience.
 
 Uses jQuery, PHP, MySQL, Processing, and JSON.
 We installed Piezo , temperature, pressure, and microphone sensors in a training dummy to detect the range of different stimuli.
@@ -6,7 +6,7 @@ We installed Piezo , temperature, pressure, and microphone sensors in a training
 Also uses Florian Jenett's awesome SQLibrary plugin for Processing.
 http://bezier.de/processing/libs/sql/
 
-The basic flow of data is
+The basic flow of data processing is
 
 Arduino >> Processing >> MySQL DB (via SQLibrary) >> jQuery Polling with AJAXed PHP >> Rendered view in Mobile Safari.
 
