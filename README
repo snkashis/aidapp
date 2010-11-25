@@ -6,6 +6,10 @@ We installed Piezo , temperature, pressure, and microphone sensors in a CPR dumm
 Also uses Florian Jenett's awesome SQLibrary plugin for Processing.
 http://bezier.de/processing/libs/sql/
 
+The basic flow of data is
+
+Arduino >> Processing >> MySQL DB (via SQLibrary) >> jQuery Polling with AJAXed PHP >> Rendered view in Mobile Safari.
+
 Binaries are in the application.* folders.
 
 Application was run on MAMP.
