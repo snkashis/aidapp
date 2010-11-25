@@ -21,23 +21,23 @@ var PracticeRun=true;
   event.preventDefault();
     });
     
-    //DEBUG Below
-/*    
-$('#comp_button').bind('click', function(){
-compression_Count++;
-$('#count_area').text(compression_Count);
-document.getElementById('comp_beat_sound').load();
-    document.getElementById('comp_beat_sound').play();
-}
-);
+     //resp section
+ var ShakeDone = false;
+var ShoutDone = false;
+var shake=0;
+var shout=0;
+var ShouldRun = true;
 
-$('#breath_button').bind('click', function(){
-Breath_Count++;
-$('#breath_count_area').text(Breath_Count);
-}
-);
-*/
-//End debug
+//end resp section
+
+//ab section
+var ab_TiltDone = false;
+var CheckDone = false;
+var CallDone = false;
+var ab_tilt = 0;
+var check = 0;
+var call = 0;
+    
  
  $('#right_nav_button').bind('click', function() {
     $.ajax({
@@ -45,12 +45,11 @@ $('#breath_count_area').text(Breath_Count);
 			data: "resp_shake="+ shake + "&resp_shout="+ shout + "&ab_chin="+ ab_tilt + "&ab_breathing="+ check + "&ab_telephone=" + call + "&cpr_compressions="+ Compressions + "&cpr_chin="+ Tilt + "&cpr_nose=" + Nose + "&cpr_breaths=" + Breaths,
 			success: function(data){
                         //alert(test);
-                        //Maybe gray out box and change the area to a "success" message
 			}
                 });
     setTimeout(function() {
 	window.location = 'practice_email.htm';
-    },500);
+    },500); 
     
 });
  
@@ -92,22 +91,7 @@ var isCompVisible=0;
     
  }, 1000);
  
- //resp section
- var ShakeDone = false;
-var ShoutDone = false;
-var shake=0;
-var shout=0;
-var ShouldRun = true;
 
-//end resp section
-
-//ab section
-var ab_TiltDone = false;
-var CheckDone = false;
-var CallDone = false;
-var ab_tilt = 0;
-var check = 0;
-var call = 0;
 
 $('.tel_button').click(function() {
     if ($('#lcd').html().length<3){
@@ -137,6 +121,7 @@ $('#send_button,#td_send').click(function() {
             $('#check10_CheckBox,#ab_chin_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
             $('#ab1,#ab2').show('slow');
             ab_TiltDone=true;
+            CheckDone=true;
         }
 	}
         else {
@@ -157,12 +142,15 @@ var TimerRunning = false;
 
 function Start10Sec_Timer()
     {	
+    
     TimerRunning = true;
     setTimeout(function() {
+        if (CheckDone==false) {
         check=1;
         CheckDone=true;
 	$('#check10_CheckBox').attr('checked', 'checked');
         $('#ab2').show('slow');
+        }
     }, 10000);
     
  //Pop up telephone
@@ -198,7 +186,8 @@ var last_Breath_Value = '0';
     else {
     $.getJSON('get_all_states.php', function(data) {
         
-        
+     console.log('ABTILT IS' + ab_tilt);
+     console.log('CHECK ' + check);
         
     //resp section
     if (ShakeDone == false) {	
@@ -251,7 +240,7 @@ var last_Breath_Value = '0';
         }
 	
         if (CheckDone==false && ab_tilt==1){
-                    if (TimerRunning == false) {
+                    if (TimerRunning==false) {
                         Start10Sec_Timer();
                     }
                 }
@@ -268,6 +257,7 @@ var last_Breath_Value = '0';
 	if(TimerRunning == true) {
             TimerRunning=false;
             CheckDone=true;
+            check=0;
             $('#check10_CheckBox').replaceWith('<span style="color:red;"><b>X</b></span> ');
             $('#ab2').show('slow');
             

@@ -17,9 +17,6 @@ $row = mysql_fetch_row($result);
 
 for ($a = 0 ; $a < $fields ; ++$a)
 {
-    /*if ($a >=1) {
-        echo ', ';
-    } */
     $field = mysql_field_name($result, $a);
     $$field = $row[$a];
     //echo '"' . $field . '": "' . $row[$a] . '"';
@@ -49,7 +46,31 @@ ob_start(); //Turn on output buffering
 Content-Type: text/plain; charset="iso-8859-1" 
 Content-Transfer-Encoding: 7bit
 
-This is the text version
+Congratulations.
+You have just completed a tutorial in basic life support, we hope you feel more prepared if someone needs CPR. Please see the results of your practical quiz below:
+
+<?php
+echo '';
+echo '100% for Check for Danger ';
+echo $resp_display . ' for Check for Response';
+echo $ab_display . ' for Airway & Breathing';
+echo $cpr_display . ' for CPR';
+echo '';
+?>
+
+Remember you do not need to be certified to help save a life but there are many other emergencies where you can make a difference.
+Sincerely, the Aidapp Team
+
+Please take a moment to look at the organisations below to attend a first aid course and learn other life saving skills: <br>
+http://www.epionemedical.com
+http://www.redcross.org.uk
+http://www.heartaid.org
+
+For more information about the Aidapp team please visit http://maimm.arts.ac.uk/degree_show/0910/ MA Interactive Media degree show website.
+
+Copyright (C) 2010 | Aidapp | All rights reserved.
+
+
 
 --PHP-alt-<?php echo $random_hash; ?><?php echo "\n"; ?>
 Content-Type: text/html; charset="iso-8859-1" 
@@ -85,15 +106,15 @@ echo '</td> <td>CPR 4</td></tr></table>';
 ?>
 <img src="http://www.snkcreative.com/FMP_images/1heart.png" style="position: relative; left: 250px;top:-130px; ">
 
-<p style="background-color:#FFFFFF; font-size:14px;">Remember you do not need to be certified to help save a life but there are many other emergencies where you can make a difference. <br>
+<p style="font-size:14px;">Remember you do not need to be certified to help save a life but there are many other emergencies where you can make a difference. <br>
 <br>Sincerely, the Aidapp Team
 </p>
 
 <span style="font-size:12px;color:#505050;">
 Please take a moment to look at the organisations below to attend a first aid course and learn other life saving skills: <br>
-<a href="http://www.epionemedical.com/"><IMG SRC="http://www.snkcreative.com/FMP_images/epionelogo.png" BORDER="0"></a><br>
-<a href="http://www.redcross.org.uk/"><IMG SRC="http://www.snkcreative.com/FMP_images/britishredcross.png" BORDER="0"></a><br>
-<a href="http://www.heartaid.org/"><IMG SRC="http://www.snkcreative.com/FMP_images/heart_aid_logo.png" BORDER="0"></a><br>
+<a href="http://www.epionemedical.com/"><IMG SRC="http://www.snkcreative.com/FMP_images/epionelogo.png" BORDER="0"></a>
+<a href="http://www.redcross.org.uk/"><IMG SRC="http://www.snkcreative.com/FMP_images/britishredcross.png" BORDER="0"></a>
+<a href="http://www.heartaid.org/"><IMG SRC="http://www.snkcreative.com/FMP_images/heart_aid_logo.png" BORDER="0"></a><br/>
 For more information about <a href="mailto:AidappTeam@gmail.com"> Aidapp team </a> please visit <a href="http://maimm.arts.ac.uk/degree_show/0910/">MA Interactive Media degree show website </a> <br />
 <br />
 <br />
@@ -114,8 +135,6 @@ $message = ob_get_clean();
   
 $subject = "Contact Us";
 $email = "Aidappteam@gmail.com";
-//$message = "Hello this is a test";
-//$headers = "From: $email";
 $headers = "From: $email \r\nReply-To: $email";
 $headers .= "\r\nContent-Type: multipart/alternative; boundary=\"PHP-alt-".$random_hash."\""; 
 

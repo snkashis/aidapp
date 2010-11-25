@@ -1,16 +1,14 @@
 <html>
-
 <head>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="user-scalable=no, width=device-width" />
     <link rel="stylesheet" type="text/css" href="style.css">
-
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<title>Responses 2</title>
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+    <title>Responses 2</title>
 
 
     <script>
- $(document).ready(function(){
+$(document).ready(function(){
     
 var ShakeDone = false;
 var ShoutDone = false;
@@ -36,7 +34,6 @@ $('#right_nav_button').bind('click', function() {
 			data: "resp_shake="+ shake + "&resp_shout="+ shout,
 			success: function(data){
                         //alert(data);
-                        //Maybe gray out box and change the area to a "success" message
 			}
                 });
     setTimeout(function() {
