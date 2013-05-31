@@ -1,5 +1,7 @@
 This system uses a bank of sensors via an Arduino to transmit signals to a web app which provides for an interactive First Aid CPR training experience.
 
+Video Demo: https://www.youtube.com/watch?v=2fh3K7oXYMc
+
 Uses jQuery, PHP, MySQL, Processing, and JSON.
 We installed Piezo , temperature, pressure, and microphone sensors in a training dummy to detect the range of different stimuli.
 
